@@ -11,7 +11,6 @@ struct NameIndex
     -Sound (one or more per syllable)
     */
 
-    /
     static inline const std::map<int, int> numSyllablesRandomDenominators =
     {
         {1, 0},
@@ -27,6 +26,7 @@ struct NameIndex
     };
 
     static inline const std::vector<std::string> vowels = {"a", "e", "i", "o", "u"};
+
     static inline const std::vector<std::string> consonants =
     {
         /// Singles.
@@ -40,9 +40,8 @@ struct NameIndex
         "k",
         "l",
         "m",
-        "n",
+        "n", // Index 10
         "p",
-        "qu", // Q must be followed by U, so I'm counting QU as a single.
         "r",
         "s",
         "t",
@@ -50,21 +49,40 @@ struct NameIndex
         "w",
         "x",
         "y",
-        "z", // Index 20 (21st position).
+        "z", // Index 19 (20th position).
 
         /// Doubles.
-        "bl", "br",
+        "bb", "bl", "br", // br is index 20 (21st position).
         "ch", "cl", "cr",
-        "dr",
-        "fl", "fr",
-        "gl", "gr",
-        "ph", "pl", "pr",
-        "sh", "sl", "sk", "sw",
-        "th", "tr", "tw",
-        "wh"
+        "dd", "dr",
+        "ff", "fl", "fr",
+        "gg", "gl", "gr",
+        "hh",
+        "jj",
+        "kk",
+        "ll",
+        "mm",
+        "nn",
+        "pp", "ph", "pl", "pr",
+        "qu",
+        "rr",
+        "ss", "sh", "sl", "sk", "sw",
+        "tt", "th", "tr", "tw",
+        "vv",
+        "wh",
+        "xx",
+        "yy",
+        "zz"
     };
+    static const int NUM_CONSONANT_SINGLES = 20;
+    static const int NUM_CONSONANT_DOUBLES = 40;
+    static const int NUM_CONSONANTS = NUM_CONSONANT_SINGLES + NUM_CONSONANT_DOUBLES;
 
+    static const int CONSONANT_SINGLES_MARKER_BEGIN = 0;
+    static const int CONSONANT_SINGLES_MARKER_END = CONSONANT_SINGLES_MARKER_BEGIN + NUM_CONSONANT_SINGLES - 1;
 
+    static const int CONSONANT_DOUBLES_MARKER_BEGIN = CONSONANT_SINGLES_MARKER_END+1;
+    static const int CONSONANT_DOUBLES_MARKER_END = CONSONANT_DOUBLES_MARKER_BEGIN + NUM_CONSONANT_DOUBLES - 1;
 
     static std::string Generate()
     {
@@ -88,7 +106,8 @@ struct NameIndex
         }
 
         /** Step 2: Generate a syllable under the following rules:
-        One consonant max.
+        //One consonant max.
+        No consecutive consonant pairs without a vowel in between.
         */
 
         std::string previousSyllableLastLetter = "?";
@@ -97,26 +116,25 @@ struct NameIndex
         {
             int numSounds = 0;
             numSounds = rand()%MAX_SYLLABLES+1;
-            bool syllableHasConsonant = false;
+            //bool syllableHasConsonant = false;
             std::string previousSoundLastLetter = "?";
 
             for(int currentSound = 0; currentSound < numSounds; currentSound ++)
             {
-                bool currentSoundIsConsonant = false;
+                bool currentSoundWillBeConsonant = false;
 
-                if(!syllableHasConsonant
-                   && !previousSoundIsConsonant
+                if( // !syllableHasConsonant &&
+                   !previousSoundIsConsonant
                    && rand()%2 == 1)
                 {
-                    currentSoundIsConsonant = true;
-                    syllableHasConsonant = true;
+                    currentSoundWillBeConsonant = true;
+                    //syllableHasConsonant = true;
                 }
 
-                if(currentSoundIsConsonant)
+                if(currentSoundWillBeConsonant)
                 {
-                    std::string proposedConsonant = consonants[rand()%consonants.size()];
-                    while(proposedConsonant == previousSoundLastLetter)
-                        proposedConsonant = consonants[rand()%consonants.size()];
+                    std::string proposedConsonant;
+                    proposedConsonant = RandomConsonant();
 
                     syllables[currentSyllable] += proposedConsonant;
                     previousSoundLastLetter = proposedConsonant;
@@ -124,22 +142,37 @@ struct NameIndex
                 }
                 else // current sound is vowel
                 {
-                    std::string proposedVowel = vowels[rand()%vowels.size()];
+                    std::string proposedVowel = RandomVowel();
                     while(proposedVowel == previousSoundLastLetter) // Disallow double vowels.
-                        proposedVowel = vowels[rand()%vowels.size()];
+                        proposedVowel = RandomVowel();
 
                     syllables[currentSyllable] += proposedVowel;
                     previousSoundLastLetter = proposedVowel;
                     previousSoundIsConsonant = false; // current is now previous.
                 }
             }
-            syllableHasConsonant = false;
+            //syllableHasConsonant = false;
 
         }
 
         for(int i = 0; i < numSyllables; i++)
             name += syllables[i];
 
+        if(!name.empty() && std::isalpha(name[0]))
+            name[0] = std::toupper(name[0]);
+
+        if(name.size() == 1)
+        {
+            if(rand()%2 == 0)
+                name += RandomVowel();
+            else
+                name += RandomConsonantDouble();
+        }
+
+        if(name.empty())
+            name = "???";
+
+        /*
         name += " = ";
         for(int i = 0; i < numSyllables; i++)
         {
@@ -148,9 +181,29 @@ struct NameIndex
 
             name += syllables[i];
         }
+        */
 
         return name;
     };
+
+    static std::string RandomConsonant()
+    {
+        return consonants[rand()%NUM_CONSONANTS];
+    }
+    static std::string RandomConsonantSingle()
+    {
+        return consonants[rand()%NUM_CONSONANT_SINGLES];
+    }
+
+    static std::string RandomConsonantDouble()
+    {
+        return consonants[rand()% (CONSONANT_DOUBLES_MARKER_END - NUM_CONSONANT_SINGLES + 1) + NUM_CONSONANT_SINGLES];
+    }
+
+    static std::string RandomVowel()
+    {
+        return vowels[rand()%vowels.size()];
+    }
 
 
 };

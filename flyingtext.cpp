@@ -64,8 +64,8 @@ void FlyingText::DrawOnOverworld()
                               0);
 
         if(scrollUp)
-            Hax::string_al_draw_text(Font::builtin8,COLKEY_FLYINGTEXT_UP,drawX+Tile::MINI_WIDTH,drawY,ALLEGRO_ALIGN_LEFT,text);
+            Hax::string_al_draw_text(Font::monogram16,COLKEY_FLYINGTEXT_UP,drawX+Tile::MINI_WIDTH,drawY,ALLEGRO_ALIGN_LEFT,text);
         else //scroll down
-            Hax::string_al_draw_text(Font::builtin8,COLKEY_FLYINGTEXT_DOWN,drawX+Tile::MINI_WIDTH,drawY,ALLEGRO_ALIGN_LEFT,text);
+            Hax::string_al_draw_text(Font::monogram16,COLKEY_FLYINGTEXT_DOWN,drawX+Tile::MINI_WIDTH,drawY,ALLEGRO_ALIGN_LEFT,text);
     }
 }

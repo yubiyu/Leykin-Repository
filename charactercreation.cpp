@@ -18,11 +18,13 @@ void CharacterCreation::Initialize()
     creationMode = 0;
 
 
+    /*
     for(int i = 0; i < 25; i++)
     {
         std::string exampleName = NameIndex::Generate();
         std::cout << exampleName << std::endl;
     }
+    */
 }
 
 void CharacterCreation::Uninitialize()
@@ -125,6 +127,11 @@ void CharacterCreation::SummaryInput()
     {
         RandomizeAll();
     }
+
+    else if(Keyboard::keyHoldTicks[Keyboard::KEY_ENTER] == 1)
+    {
+        Scene::ChangeScene(Scene::SCENE_OVERWORLD);
+    }
 }
 
 void CharacterCreation::DrawingSwitchboard()
@@ -190,31 +197,51 @@ void CharacterCreation::SummaryDrawing()
         Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_VALUE, SUMMARY_ATTRIBUTE_VALUE_TEXT_X, SUMMARY_ATTRIBUTE_TEXT_Y + i*SUMMARY_ATTRIBUTE_TEXT_SPACING, ALLEGRO_ALIGN_LEFT, creation->attributesString[i]);
     }
 
-    al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_HEADER, SUMMARY_SKILLS_HEADER_TEXT_X, SUMMARY_SKILLS_HEADER_TEXT_Y, ALLEGRO_ALIGN_LEFT, "Skills");
-
     al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_HEADER, SUMMARY_FEATS_HEADER_TEXT_X, SUMMARY_FEATS_HEADER_TEXT_Y, ALLEGRO_ALIGN_LEFT, "Feats");
 
-    int featsTextDrawY = 0;
+    int featsTextYOffset = 0;
     for(std::map<int,int>::iterator it = creation->ancestryFeats.begin(); it != creation->ancestryFeats.end(); ++it)
     {
         Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL,
-                                 SUMMARY_FEATS_LABEL_TEXT_X, SUMMARY_FEATS_TEXT_Y + featsTextDrawY, ALLEGRO_ALIGN_LEFT,
+                                 SUMMARY_FEATS_LABEL_TEXT_X, SUMMARY_FEATS_TEXT_Y + featsTextYOffset, ALLEGRO_ALIGN_LEFT,
                                  FeatIndex::ancestryFeatNames.at((*it).first));
-        featsTextDrawY += SUMMARY_FEATS_TEXT_SPACING;
+        featsTextYOffset += SUMMARY_FEATS_TEXT_SPACING;
     }
     for(std::map<int,int>::iterator it = creation->roleFeats.begin(); it != creation->roleFeats.end(); ++it)
     {
         Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL,
-                                  SUMMARY_FEATS_LABEL_TEXT_X, SUMMARY_FEATS_TEXT_Y + featsTextDrawY, ALLEGRO_ALIGN_LEFT,
+                                  SUMMARY_FEATS_LABEL_TEXT_X, SUMMARY_FEATS_TEXT_Y + featsTextYOffset, ALLEGRO_ALIGN_LEFT,
                                    FeatIndex::roleFeatNames.at((*it).first));
-        featsTextDrawY += SUMMARY_FEATS_TEXT_SPACING;
+        featsTextYOffset += SUMMARY_FEATS_TEXT_SPACING;
+    }
+
+    al_draw_text(Font::monogram32, COLKEY_TEXT_HEADER, SUMMARY_SKILLS_HEADER_TEXT_X, SUMMARY_SKILLS_HEADER_TEXT_Y, ALLEGRO_ALIGN_LEFT, "Skills");
+
+    int skillsTextYOffset = 0;
+    for(std::map<int,int>::iterator it = creation->totalSkills.begin(); it != creation->totalSkills.end(); ++it)
+    {
+        Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL,
+                                 SUMMARY_SKILLS_LABEL_TEXT_X, SUMMARY_SKILLS_TEXT_Y + skillsTextYOffset, ALLEGRO_ALIGN_RIGHT,
+                                 SkillIndex::skillNames.at((*it).first));
+
+        Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_VALUE,
+                                 SUMMARY_SKILLS_VALUE_TEXT_X, SUMMARY_SKILLS_TEXT_Y + skillsTextYOffset, ALLEGRO_ALIGN_LEFT,
+                                 creation->totalSkillsString[(*it).first]);
+
+        skillsTextYOffset += SUMMARY_SKILLS_TEXT_SPACING;
+
+        if((*it).first == SkillIndex::BODY_SKILLS_MARKER_END || (*it).first == SkillIndex::MIND_SKILLS_MARKER_END /* || (*it).first == SkillIndex::SPIRIT_SKILLS_MARKER_END */)
+            skillsTextYOffset += SUMMARY_SKILLS_TEXT_SPACING;// line break
     }
 
 
+    al_draw_text(Font::monogram32, COLKEY_TEXT_HEADER, Display::WIDTH/2, Display::HEIGHT - 100, 0, "R: Reroll || Enter: Proceed");
 }
 
 void CharacterCreation::RandomizeAll()
 {
+    creation->SetName(NameIndex::Generate());
+
     int randomAncestry = rand()%AncestryIndex::NUM_ANCESTRIES;
     creation->SetAncestry(randomAncestry);
 

@@ -110,6 +110,6 @@ void Calendar::UpdateCalendarText()
 
 void Calendar::DrawCalendar()
 {
-    Hax::string_al_draw_text(Font::builtin8, COLKEY_TEXT_VALUE, CALENDAR_TEXT_DRAW_X, CALENDAR_TEXT_DRAW_Y, ALLEGRO_ALIGN_RIGHT, calendarText);
+    Hax::string_al_draw_text(Font::monogram16, COLKEY_TEXT_VALUE, CALENDAR_TEXT_DRAW_X, CALENDAR_TEXT_DRAW_Y, ALLEGRO_ALIGN_RIGHT, calendarText);
 }
 

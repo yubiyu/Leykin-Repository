@@ -416,7 +416,7 @@ void Overworld::DrawDebugGridText()//float mouseTransformedX, float mouseTransfo
                                        + std::to_string(camXCell) + ", " + std::to_string(camYCell) + ") "
                                        + std::to_string(zoomPercentage) + "% zoom";
 
-    Hax::string_al_draw_text(Font::builtin8,COLKEY_CAMERA_CROSSHAIR_LOCKED,0,0,ALLEGRO_ALIGN_LEFT,cameraPositionString);
+    Hax::string_al_draw_text(Font::monogram16,COLKEY_CAMERA_CROSSHAIR_LOCKED,0,0,ALLEGRO_ALIGN_LEFT,cameraPositionString);
 }
 */
 
@@ -825,10 +825,10 @@ void Overworld::DrawGridText(float mouseTransformedX, float mouseTransformedY)
             + std::to_string(zoomPercentage) + "%";
 
     if(!LockOn::isLockedOn)
-        Hax::string_al_draw_text(Font::builtin8,COLKEY_CAMERA_CROSSHAIR_FREE,0,0,ALLEGRO_ALIGN_LEFT,cameraCrosshairPositionString);
+        Hax::string_al_draw_text(Font::monogram16,COLKEY_CAMERA_CROSSHAIR_FREE,0,0,ALLEGRO_ALIGN_LEFT,cameraCrosshairPositionString);
     else
-        Hax::string_al_draw_text(Font::builtin8,COLKEY_CAMERA_CROSSHAIR_LOCKED,0,0,ALLEGRO_ALIGN_LEFT,cameraCrosshairPositionString);
+        Hax::string_al_draw_text(Font::monogram16,COLKEY_CAMERA_CROSSHAIR_LOCKED,0,0,ALLEGRO_ALIGN_LEFT,cameraCrosshairPositionString);
 
-    Hax::string_al_draw_text(Font::builtin8,COLKEY_MOUSE_CROSSHAIR,0,Font::TEXT_HEIGHT_8,ALLEGRO_ALIGN_LEFT,mouseCrosshairPositionString);
+    Hax::string_al_draw_text(Font::monogram16,COLKEY_MOUSE_CROSSHAIR,0,Font::TEXT_HEIGHT_8,ALLEGRO_ALIGN_LEFT,mouseCrosshairPositionString);
 
 }

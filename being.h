@@ -45,6 +45,12 @@ public:
     std::map<int,int>ancestryFeats;
     std::map<int,int>roleFeats;
 
+    std::map<int, int>ancestrySkills;
+    std::map<int, int>roleSkills;
+    std::map<int, int>trainedSkills;
+    std::map<int, int>totalSkills;
+    std::string totalSkillsString[SkillIndex::NUM_SKILLS];
+
 /// Objectives
     //int objectiveA;
     //int objectiveB;
@@ -90,6 +96,27 @@ public:
 
 /// Stats functions
     void SetAttribute(int which_attribute, int value);
+
+    void ResetSkills()
+    {
+        for(size_t i = 0; i < SkillIndex::NUM_SKILLS; i++)
+        {
+            ancestrySkills[i] = 0;
+            roleSkills[i] = 0;
+            trainedSkills[i] = 0;
+        }
+        UpdateTotalSkills();
+    }
+
+    void UpdateTotalSkills()
+    {
+        for(size_t i = 0; i < SkillIndex::NUM_SKILLS; i++)
+        {
+            totalSkills[i] = ancestrySkills[i] + roleSkills[i] + trainedSkills[i];
+            totalSkillsString[i] = std::to_string(totalSkills[i]);
+        }
+
+    }
 
 /// Progress
     void Progress();

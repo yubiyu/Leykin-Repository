@@ -39,15 +39,15 @@ struct BubbleView
     static constexpr float beingStatusBubbleHeight = beingStatusBubbleObjectivesPartitionHeight + Font::TEXT_HEIGHT_12*3;
 
     /// Caravan bubbles
-    static std::string caravanCrewBubbleLabel;
-    static std::string caravanCrewBubbleEmptyText; // Though this ought not to pop up for more than one tick, since the caravan should disband and delete.
+    static inline const std::string caravanCrewBubbleHeader = "Crew:";
+    static inline const std::string caravanCrewBubbleEmptyText = "<No Crew>"; // Though this ought not to pop up for more than one tick, since the caravan should disband and delete.
     static constexpr float caravanCrewBubbleDrawX = Display::WIDTH*1/40;
     static constexpr float caravanCrewBubbleDrawY = Display::HEIGHT*1/30;
     static constexpr float caravanCrewBubbleHeight = Tile::HEIGHT;
     static float caravanCrewBubbleWidth;
 
-    static std::string caravanInventoryBubbleLabel;
-    static std::string caravanInventoryBubbleEmptyText;
+    static inline const std::string caravanInventoryBubbleHeader = "Cargo:";
+    static inline const std::string caravanInventoryBubbleEmptyText = "<No cargo carried>";
     static constexpr float caravanInventoryBubbleDrawX = Display::WIDTH*1/40;
     static constexpr float caravanInventoryBubbleDrawY = Display::HEIGHT*6/30;
     static constexpr float caravanInventoryBubbleRowSpacing = Font::TEXT_HEIGHT_8;
@@ -57,9 +57,9 @@ struct BubbleView
     static unsigned caravanInventoryBubbleNumRows;
     static float caravanInventoryBubbleWidth, caravanInventoryBubbleHeight;
 
-    static std::string caravanTradeRecordsBubbleLabel;
-    static std::string caravanTradeRecordsBubbleEmptyText;
-    static std::string caravanTradeRecordsBubbleNoTransactionText;
+    static inline const std::string caravanTradeRecordsBubbleHeader = "Trade Records:";
+    static inline const std::string caravanTradeRecordsBubbleEmptyText = "<No records>";
+    static inline const std::string caravanTradeRecordsBubbleNoTransactionText = "<No transaction>";
     static constexpr float caravanTradeRecordsBubbleDrawX = Display::WIDTH* 1/40;
     static constexpr float caravanTradeRecordsBubbleDrawY = Display::HEIGHT* 11/30;
     static constexpr float caravanTradeRecordsBubbleRowSpacing = Font::TEXT_HEIGHT_8;
@@ -70,8 +70,8 @@ struct BubbleView
     static unsigned caravanTradeRecordsBubbleNumRows;
     static float caravanTradeRecordsBubbleHeight;
 
-    static std::string caravanPathfindingBubbleLabel;
-    static std::string caravanPathfindingBubbleEmptyText;
+    static inline const std::string caravanPathfindingBubbleHeader = "Pathfinding:";
+    static inline const std::string caravanPathfindingBubbleEmptyText = "<None>";
     static constexpr float caravanPathfindingBubbleColSpacing = Tile::WIDTH;
     static constexpr float caravanPathfindingBubbleRowSpacing = Font::TEXT_HEIGHT_8;
     static constexpr float caravanPathfindingBubbleDrawX = Display::WIDTH*1/40;
@@ -83,8 +83,8 @@ struct BubbleView
     static float caravanPathfindingBubbleWidth, caravanPathfindingBubbleHeight;
 
     /// Place bubbles
-    static std::string placePopulationBubbleLabel;
-    static std::string placePopulationBubbleEmptyText;
+    static inline const std::string placePopulationBubbleHeader = "Population";
+    static inline const std::string placePopulationBubbleEmptyText = "<None>";
     static constexpr float placePopulationBubbleDrawX = Display::WIDTH*26/40;
     static constexpr float placePopulationBubbleDrawY = Display::HEIGHT*1/30;
     static constexpr int placePopulationBubbleBaseCols = 1;
@@ -93,8 +93,8 @@ struct BubbleView
     static unsigned placePopulationBubbleNumCols;
 
 
-    static std::string placeCaravanseraiLabel;
-    static std::string placeCaravanseraiEmptyText;
+    static inline const std::string placeCaravanseraiHeader = "Caravanserai";
+    static inline const std::string placeCaravanseraiEmptyText = "<Empty>";
     static constexpr float placeCaravanseraiDrawX = Display::WIDTH*33/40;
     static constexpr float placeCaravanseraiDrawY = Display::HEIGHT*14/30;
     static constexpr unsigned placeCaravanseraiBaseCols = 6;
@@ -105,7 +105,7 @@ struct BubbleView
     static float placeCaravanseraiHeight;
 
 
-    static std::string placeSurplusBubbleLabel;
+    static inline const std::string placeSurplusBubbleHeader = "Surplus";
     static constexpr float placeSurplusBubbleDrawX = Display::WIDTH*33/40;
     static constexpr float placeSurplusBubbleDrawY = Display::HEIGHT* 6/30;
     static constexpr unsigned placeSurplusBubbleBaseCols = 1;
@@ -115,7 +115,7 @@ struct BubbleView
     static float placeSurplusBubbleWidth, placeSurplusBubbleHeight; // Width extended by Tile::WIDTH*1.5 in UpdateplaceSurplusBubble()
 
 
-    static std::string placeDeficitBubbleLabel;
+    static inline const std::string placeDeficitBubbleHeader = "Deficit";
     static constexpr float placeDeficitBubbleDrawX = Display::WIDTH*37/40 - Tile::WIDTH/2;
     static constexpr float placeDeficitBubbleDrawY = Display::HEIGHT*6/30;
     static constexpr unsigned placeDeficitBubbleBaseCols = 1;
@@ -125,8 +125,8 @@ struct BubbleView
     static float placeDeficitBubbleWidth, placeDeficitBubbleHeight; // Width extended by Tile::WIDTH*1.5 in UpdateplaceDeficitBubble()
 
 
-    static std::string placeMarketBubbleLabel;
-    static std::string placeMarketBubbleEmptyText;
+    static inline const std::string placeMarketBubbleHeader = "Market";
+    static inline const std::string placeMarketBubbleEmptyText = "<No inventory>";
     static constexpr float placeMarketBubbleDrawX       = Display::WIDTH*26/40;
     static constexpr float placeMarketBubbleDrawY       = Display::HEIGHT* 6/30;
     static constexpr float placeMarketBubbleRowSpacing  = Font::TEXT_HEIGHT_8;
@@ -137,8 +137,8 @@ struct BubbleView
     static float placeMarketBubbleWidth;
     static float placeMarketBubbleHeight;
 
-    static std::string placeIndustriesBubbleLabel;
-    static std::string placeIndustriesBubbleEmptyText;
+    static inline const std::string placeIndustriesBubbleHeader = "Local industries";
+    static inline const std::string placeIndustriesBubbleEmptyText = "<No industries>";
     static constexpr float placeIndustriesBubbleDrawX = Display::WIDTH*26/40;
     static constexpr float placeIndustriesBubbleDrawY = Display::HEIGHT*14/30;
     static constexpr float placeIndustriesBubbleRowSpacing = 4; // Arbitrary gap
@@ -153,7 +153,7 @@ struct BubbleView
     static std::string encyclopediaBubbleEntryName;
     static std::string encyclopediaBubbleEntryText;
 
-    static std::string encyclopediaBubbleLabel;
+    static inline const std::string encyclopediaBubbleHeader = "Encyclopedia";
     static constexpr float encyclopediaBubbleWidth = Tile::WIDTH*8;
     static float encyclopediaBubbleHeight;
     static float encyclopediaBubbleDrawX;
@@ -165,28 +165,28 @@ struct BubbleView
         currentPlace = nullptr;
         currentBeing = nullptr;
 
-        caravanCrewBubbleLabel = "Crew:";
-        caravanCrewBubbleEmptyText = "<No Crew>";
-        caravanInventoryBubbleLabel = "Cargo:";
-        caravanInventoryBubbleEmptyText = "<No cargo carried>";
-        caravanTradeRecordsBubbleLabel = "Trade Records:";
-        caravanTradeRecordsBubbleEmptyText = "<No records>";
-        caravanTradeRecordsBubbleNoTransactionText = "<No transaction>";
-        caravanPathfindingBubbleLabel = "Pathfinding:";
-        caravanPathfindingBubbleEmptyText = "<No path>";
+        //caravanCrewBubbleHeader = "Crew:";
+        //caravanCrewBubbleEmptyText = "<No Crew>";
+        //caravanInventoryBubbleHeader = "Cargo:";
+        //caravanInventoryBubbleEmptyText = "<No cargo carried>";
+        //caravanTradeRecordsBubbleHeader = "Trade Records:";
+        //caravanTradeRecordsBubbleEmptyText = "<No records>";
+        //caravanTradeRecordsBubbleNoTransactionText = "<No transaction>";
+        //caravanPathfindingBubbleHeader = "Pathfinding:";
+        //caravanPathfindingBubbleEmptyText = "<No path>";
 
-        placePopulationBubbleLabel = "Population";
-        placePopulationBubbleEmptyText = "<None>";
-        placeCaravanseraiLabel = "Caravanserai";
-        placeCaravanseraiEmptyText = "<Empty>";
-        placeSurplusBubbleLabel = "Surplus";
-        placeDeficitBubbleLabel = "Deficit";
-        placeMarketBubbleLabel = "Market";
-        placeMarketBubbleEmptyText = "<No inventory>";
-        placeIndustriesBubbleLabel = "Local Industries";
-        placeIndustriesBubbleEmptyText = "<No industries>";
+        //placePopulationBubbleHeader = "Population";
+        //placePopulationBubbleEmptyText = "<None>";
+        //placeCaravanseraiHeader = "Caravanserai";
+        //placeCaravanseraiEmptyText = "<Empty>";
+        //placeSurplusBubbleHeader = "Surplus";
+        //placeDeficitBubbleHeader = "Deficit";
+        //placeMarketBubbleHeader = "Market";
+        //placeMarketBubbleEmptyText = "<No inventory>";
+        //placeIndustriesBubbleHeader = "Local Industries";
+        //placeIndustriesBubbleEmptyText = "<No industries>";
 
-        encyclopediaBubbleLabel = "Encyclopedia";
+        //encyclopediaBubbleHeader = "Encyclopedia";
 
         beingStatusBubbleOpen = false;
         encyclopediaBubbleOpen = false;

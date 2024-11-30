@@ -21,6 +21,8 @@ Being::Being()
         SetAttribute(i, 6);
     }
 
+    ResetSkills();
+
     travelSpeed = 1.0;
 
     facingLeft = false;
@@ -66,6 +68,10 @@ void Being::SetAncestry(int a)
 
     ancestryFeats.clear();
     ancestryFeats = AncestryIndex::ancestryFeats.at(ancestry);
+
+    ancestrySkills.clear();
+    ancestrySkills = AncestryIndex::ancestrySkills.at(ancestry);
+    UpdateTotalSkills();
 }
 
 void Being::SetRole(int whichRole)
@@ -75,6 +81,10 @@ void Being::SetRole(int whichRole)
 
     roleFeats.clear();
     roleFeats = RoleIndex::roleFeats.at(role);
+
+    roleSkills.clear();
+    roleSkills = RoleIndex::roleSkills.at(role);
+    UpdateTotalSkills();
 }
 
 void Being::SetHometown(int h)

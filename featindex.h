@@ -73,7 +73,7 @@ struct FeatIndex
 
         ROLE_FEAT_MINSTREL_SECRET_CHORD,
 
-        ROLE_FEAT_DANCER_GRACE
+        ROLE_FEAT_DANCER_SENSE_AFFINITY
     };
 
     inline static const std::map<unsigned, std::string>roleFeatNames
@@ -89,7 +89,7 @@ struct FeatIndex
         {ROLE_FEAT_MERCHANT_APPRAISAL, "Appraisal"},
         {ROLE_FEAT_HEALER_PREVENTATIVE_MEASURES, "Preventative Measures"},
         {ROLE_FEAT_MINSTREL_SECRET_CHORD, "Secret Chord"},
-        {ROLE_FEAT_DANCER_GRACE, "Grace"}
+        {ROLE_FEAT_DANCER_SENSE_AFFINITY, "Sense Affinity"}
     };
 
 };

@@ -5,6 +5,7 @@
 
 #include "attributeindex.h"
 #include "featindex.h"
+#include "skillindex.h"
 
 struct AncestryIndex
 {
@@ -68,6 +69,38 @@ struct AncestryIndex
 
         {ANCESTRY_HAPHAE, {{FeatIndex::AN_FEAT_HAPHAE_FARSIGHT, 1},
                            {FeatIndex::AN_FEAT_HAPHAE_LIGHTNESS, 1}}}
+    };
+
+    inline static const std::map<int, std::map<int, int>> ancestrySkills
+    {
+        {ANCESTRY_VERIT, {{SkillIndex::SKILL_TRAVEL, 1},
+                          {SkillIndex::SKILL_LANGUAGES, 1},
+                          {SkillIndex::SKILL_LEADERSHIP, 1}}},
+
+        {ANCESTRY_YETI,  {{SkillIndex::SKILL_TRAVEL, 1},
+                          {SkillIndex::SKILL_WEIGHT_LIFTING, 1},
+                          {SkillIndex::SKILL_FAITH, 1}}},
+
+        {ANCESTRY_MAKHI, {{SkillIndex::SKILL_NEGOTIATION, 1},
+                          {SkillIndex::SKILL_MACHINERY, 1},
+                          {SkillIndex::SKILL_LEADERSHIP, 1}}},
+
+        {ANCESTRY_BEYU,  {{SkillIndex::SKILL_BREATH, 1},
+                          {SkillIndex::SKILL_MEDICINE, 1},
+                          {SkillIndex::SKILL_MUSIC, 1}}},
+
+        {ANCESTRY_MESERA, {{SkillIndex::SKILL_DANCE, 1},
+                           {SkillIndex::SKILL_BEAST_TONGUE, 1},
+                           {SkillIndex::SKILL_PERCEPTION, 1}}},
+
+        {ANCESTRY_ORDON, {{SkillIndex::SKILL_WEIGHT_LIFTING, 1},
+                          {SkillIndex::SKILL_TACTICS, 1},
+                          {SkillIndex::SKILL_MACHINERY, 1}}},
+
+        {ANCESTRY_HAPHAE, {{SkillIndex::SKILL_MARKSMANSHIP, 1},
+                           {SkillIndex::SKILL_LANGUAGES, 1},
+                           {SkillIndex::SKILL_NEGOTIATION, 1}}},
+
     };
 };
 

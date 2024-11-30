@@ -3,6 +3,7 @@
 
 #include "attributeindex.h"
 #include "featindex.h"
+#include "skillindex.h"
 
 struct RoleIndex
 {
@@ -10,7 +11,7 @@ struct RoleIndex
     {
         ROLE_CARAVANEER = 0, // Safety in close cooperation.
         ROLE_MESSENGER = 1,  // Swiftness is security.
-        ROLE_PILGRIM = 2,    // Travelling seekers of enlightenment.
+        ROLE_PILGRIM = 2,    // Wandering seekers of enlightenment.
         ROLE_EXILE = 3,      // Survivalists by necessity.
         ROLE_BANDIT = 4,     // The bane of travellers.
         ROLE_WARRIOR = 5,    // The study of arms.
@@ -70,7 +71,72 @@ struct RoleIndex
         {ROLE_MERCHANT,    {{FeatIndex::ROLE_FEAT_MERCHANT_APPRAISAL, 1}}},
         {ROLE_HEALER,      {{FeatIndex::ROLE_FEAT_HEALER_PREVENTATIVE_MEASURES, 1}}},
         {ROLE_MINSTREL,    {{FeatIndex::ROLE_FEAT_MINSTREL_SECRET_CHORD, 1}}},
-        {ROLE_DANCER,      {{FeatIndex::ROLE_FEAT_DANCER_GRACE, 1}}}
+        {ROLE_DANCER,      {{FeatIndex::ROLE_FEAT_DANCER_SENSE_AFFINITY, 1}}}
+    };
+
+    inline static const std::map<int, std::map<int, int>> roleSkills
+    {
+        {ROLE_CARAVANEER, {{SkillIndex::SKILL_TRAVEL, 1},
+                           {SkillIndex::SKILL_WEIGHT_LIFTING, 1},
+                           {SkillIndex::SKILL_BEAST_TONGUE, 1},
+                           {SkillIndex::SKILL_LEADERSHIP, 2}}},
+
+        {ROLE_MESSENGER,   {{SkillIndex::SKILL_BREATH, 1},
+                            {SkillIndex::SKILL_TRAVEL, 1},
+                            {SkillIndex::SKILL_LANGUAGES, 2},
+                            {SkillIndex::SKILL_BEAST_TONGUE, 1}}},
+
+        {ROLE_PILGRIM,    {{SkillIndex::SKILL_LANGUAGES, 1},
+                           {SkillIndex::SKILL_MEDICINE, 1},
+                           {SkillIndex::SKILL_FAITH, 1},
+                           {SkillIndex::SKILL_PERCEPTION, 2}}},
+
+        {ROLE_EXILE,      {{SkillIndex::SKILL_TRAVEL, 2},
+                           {SkillIndex::SKILL_MEDICINE, 1},
+                           {SkillIndex::SKILL_MACHINERY, 1},
+                           {SkillIndex::SKILL_PERCEPTION, 1}}},
+
+        {ROLE_BANDIT,     {{SkillIndex::SKILL_WEIGHT_LIFTING, 1},
+                           {SkillIndex::SKILL_TACTICS, 2},
+                           {SkillIndex::SKILL_NEGOTIATION, 1},
+                           {SkillIndex::SKILL_MACHINERY, 1}}},
+
+        {ROLE_WARRIOR,    {{SkillIndex::SKILL_MARKSMANSHIP, 1},
+                           {SkillIndex::SKILL_WEIGHT_LIFTING, 2},
+                           {SkillIndex::SKILL_TACTICS, 1},
+                           {SkillIndex::SKILL_LEADERSHIP, 1}}},
+
+        {ROLE_HUNTER,     {{SkillIndex::SKILL_DANCE, 1},
+                           {SkillIndex::SKILL_MARKSMANSHIP, 1},
+                           {SkillIndex::SKILL_BEAST_TONGUE, 2},
+                           {SkillIndex::SKILL_PERCEPTION, 1}}},
+
+        {ROLE_APOSTLE,    {{SkillIndex::SKILL_BREATH, 1},
+                           {SkillIndex::SKILL_LANGUAGES, 1},
+                           {SkillIndex::SKILL_FAITH, 2},
+                           {SkillIndex::SKILL_MUSIC, 1}}},
+
+        {ROLE_MERCHANT,   {{SkillIndex::SKILL_LANGUAGES, 1},
+                           {SkillIndex::SKILL_NEGOTIATION, 2},
+                           {SkillIndex::SKILL_LEADERSHIP, 1},
+                           {SkillIndex::SKILL_PERCEPTION, 1}}},
+
+        {ROLE_HEALER,     {{SkillIndex::SKILL_MEDICINE, 2},
+                           {SkillIndex::SKILL_MACHINERY, 1},
+                           {SkillIndex::SKILL_BEAST_TONGUE, 1},
+                           {SkillIndex::SKILL_FAITH, 1}}},
+
+        {ROLE_MINSTREL,   {{SkillIndex::SKILL_LANGUAGES, 1},
+                           {SkillIndex::SKILL_MACHINERY, 1},
+                           {SkillIndex::SKILL_FAITH, 1},
+                           {SkillIndex::SKILL_MUSIC, 2}}},
+
+
+        {ROLE_DANCER,     {{SkillIndex::SKILL_DANCE, 2},
+                           {SkillIndex::SKILL_MARKSMANSHIP, 1},
+                           {SkillIndex::SKILL_NEGOTIATION, 1},
+                           {SkillIndex::SKILL_LEADERSHIP, 1}}}
+
     };
 
 };

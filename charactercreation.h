@@ -4,6 +4,8 @@
 
 #include "beingIndex.h"
 
+#include "scene.h"
+
 #include "font.h"
 #include "palette.h"
 
@@ -62,12 +64,16 @@ struct CharacterCreation
     static const int SUMMARY_FEATS_HEADER_TEXT_X = Display::WIDTH*1/40;
     static const int SUMMARY_FEATS_HEADER_TEXT_Y = Display::HEIGHT*17/30;
     static const int SUMMARY_FEATS_LABEL_TEXT_X = Display::WIDTH*3/40;
-    //static const int SUMMARY_FEATS_VALUE_TEXT_X = Display::WIDTH*6/40;
+    //static const int SUMMARY_FEATS_VALUE_TEXT_X = Display::WIDTH*4/40;
     static const int SUMMARY_FEATS_TEXT_Y = Display::HEIGHT*18/30;
     static const int SUMMARY_FEATS_TEXT_SPACING = Display::HEIGHT*1/30;
 
-    static const int SUMMARY_SKILLS_HEADER_TEXT_X = Display::WIDTH*25/40;
+    static const int SUMMARY_SKILLS_HEADER_TEXT_X = Display::WIDTH*13/40;
     static const int SUMMARY_SKILLS_HEADER_TEXT_Y = Display::HEIGHT*5/30;
+    static const int SUMMARY_SKILLS_LABEL_TEXT_X = Display::WIDTH*17/40;
+    static const int SUMMARY_SKILLS_VALUE_TEXT_X = Display::WIDTH*18/40;
+    static const int SUMMARY_SKILLS_TEXT_Y = Display::HEIGHT*6/30;
+    static const int SUMMARY_SKILLS_TEXT_SPACING = Display::HEIGHT*1/30;
 
     static int creationMode;
     enum enumCreationModes

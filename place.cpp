@@ -742,7 +742,7 @@ void Place::DrawSpriteOnOverworld()
                               drawY,
                               0);
 
-        Hax::string_al_draw_text(Font::builtin8, COLKEY_TEXT_VALUE, nameDrawX, nameDrawY, ALLEGRO_ALIGN_CENTER, name);
+        Hax::string_al_draw_text(FONTDEF_OVERWORLD_PLACENAME, COLKEY_TEXT_VALUE, nameDrawX, nameDrawY, ALLEGRO_ALIGN_CENTER, name);
     //}
 }
 

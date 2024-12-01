@@ -7,7 +7,7 @@ struct FeatIndex
 {
     enum enumAncestryFeats
     {
-        AN_FEAT_VERIT_INQUISITIVE,
+        AN_FEAT_VERIT_UNINHIBITED,
 
         AN_FEAT_YETI_WARM_FUR,
         AN_FEAT_YETI_HOSPITALITY,
@@ -19,6 +19,7 @@ struct FeatIndex
         AN_FEAT_BEYU_POISON_TOLERANCE,
 
         AN_FEAT_MESERA_POWER_PLANT,
+        AN_FEAT_MESERA_CLOUDTREE_REJUVENATION,
 
         AN_FEAT_ORDON_CARAPACE,
         AN_FEAT_ORDON_DARKVISION,
@@ -29,7 +30,7 @@ struct FeatIndex
 
     inline static const std::map<unsigned,std::string>ancestryFeatNames
     {
-        {AN_FEAT_VERIT_INQUISITIVE, "Inquisitive"},
+        {AN_FEAT_VERIT_UNINHIBITED, "Uninhibited"},
 
         {AN_FEAT_YETI_WARM_FUR, "Warm Fur"},
         {AN_FEAT_YETI_HOSPITALITY, "Hospitality"},
@@ -41,6 +42,7 @@ struct FeatIndex
         {AN_FEAT_BEYU_POISON_TOLERANCE, "Poison Tolerance"},
 
         {AN_FEAT_MESERA_POWER_PLANT, "Power Plant"},
+        {AN_FEAT_MESERA_CLOUDTREE_REJUVENATION, "Cloudtree Sanctuaries"},
 
         {AN_FEAT_ORDON_CARAPACE, "Carapace"},
         {AN_FEAT_ORDON_DARKVISION, "Darkvision"},

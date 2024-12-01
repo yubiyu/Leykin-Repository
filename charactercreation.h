@@ -3,6 +3,7 @@
 #include "keyboard.h"
 
 #include "beingIndex.h"
+#include "encyclopedia.h"
 
 #include "scene.h"
 
@@ -38,42 +39,47 @@ struct CharacterCreation
     static constexpr float SUMMARY_CREATION_SPRITE_X = Display::WIDTH*5/40;
     static constexpr float SUMMARY_CREATION_SPRITE_Y = Display::HEIGHT*5/30;
 
-    static const int SUMMARY_NAME_LABEL_TEXT_X = Display::WIDTH*5/40;
-    static const int SUMMARY_NAME_VALUE_TEXT_X = Display::WIDTH*6/40;
-    static const int SUMMARY_NAME_TEXT_Y = Display::HEIGHT*7/30;
+    static const int SUMMARY_BIOGRAPHY_ORIGIN_X = Display::WIDTH*5/40;
+    static const int SUMMARY_BIOGRAPHY_ORIGIN_Y = Display::HEIGHT*7/30;
+    static const int SUMMARY_BIOGRAPHY_LABEL_TEXT_X = SUMMARY_BIOGRAPHY_ORIGIN_X;
+    static const int SUMMARY_BIOGRAPHY_VALUE_TEXT_X = SUMMARY_BIOGRAPHY_LABEL_TEXT_X + Display::WIDTH*1/40;
+    static const int SUMMARY_BIOGRAPHY_BLOCK_SPACING = Display::HEIGHT*4/30;
+    static const int SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_Y_OFFSET = Display::HEIGHT*1/30; // The vertical gap between the label+value line and the description text
+    static const int SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_WIDTH = Display::WIDTH*20/40;
 
-    static const int SUMMARY_ANCESTRY_LABEL_TEXT_X = Display::WIDTH*5/40;
-    static const int SUMMARY_ANCESTRY_VALUE_TEXT_X = Display::WIDTH*6/40;
-    static const int SUMMARY_ANCESTRY_TEXT_Y = Display::HEIGHT*8/30;
+    static const int SUMMARY_NAME_TEXT_Y = SUMMARY_BIOGRAPHY_ORIGIN_Y + SUMMARY_BIOGRAPHY_BLOCK_SPACING*0;
+    static const int SUMMARY_ANCESTRY_TEXT_Y = SUMMARY_BIOGRAPHY_ORIGIN_Y + SUMMARY_BIOGRAPHY_BLOCK_SPACING*1;
+    static const int SUMMARY_ROLE_TEXT_Y = SUMMARY_BIOGRAPHY_ORIGIN_Y + SUMMARY_BIOGRAPHY_BLOCK_SPACING*2;
+    static const int SUMMARY_HOMETOWN_TEXT_Y = SUMMARY_BIOGRAPHY_ORIGIN_Y + SUMMARY_BIOGRAPHY_BLOCK_SPACING*3;
 
-    static const int SUMMARY_ROLE_LABEL_TEXT_X = Display::WIDTH*5/40;
-    static const int SUMMARY_ROLE_VALUE_TEXT_X = Display::WIDTH*6/40;
-    static const int SUMMARY_ROLE_TEXT_Y = Display::HEIGHT*9/30;
+    static const int SUMMARY_FEATS_ORIGIN_X = Display::WIDTH*5/40;
+    static const int SUMMARY_FEATS_ORIGIN_Y = Display::HEIGHT*25/30;
+    static const int SUMMARY_FEATS_HEADER_TEXT_X = SUMMARY_FEATS_ORIGIN_X;
+    static const int SUMMARY_FEATS_HEADER_TEXT_Y = SUMMARY_FEATS_ORIGIN_Y - Display::HEIGHT*1/30;
+    static const int SUMMARY_FEATS_LABEL_TEXT_X = SUMMARY_FEATS_ORIGIN_X;
+    //static const int SUMMARY_FEATS_VALUE_TEXT_X = SUMMARY_FEATS_ORIGIN_X+ Display::WIDTH*1/40;
+    static const int SUMMARY_FEATS_TEXT_Y = SUMMARY_FEATS_ORIGIN_Y;
+    static const int SUMMARY_FEATS_TEXT_Y_OFFSET = Display::HEIGHT*1/30;
 
-    static const int SUMMARY_HOMETOWN_LABEL_TEXT_X = Display::WIDTH*5/40;
-    static const int SUMMARY_HOMETOWN_VALUE_TEXT_X = Display::WIDTH*6/40;
-    static const int SUMMARY_HOMETOWN_TEXT_Y = Display::HEIGHT*10/30;
 
-    static const int SUMMARY_ATTRIBUTE_HEADER_TEXT_X = Display::WIDTH*1/40;
-    static const int SUMMARY_ATTRIBUTE_HEADER_TEXT_Y = Display::HEIGHT*12/30;
-    static const int SUMMARY_ATTRIBUTE_LABEL_TEXT_X = Display::WIDTH*5/40; // Align right
-    static const int SUMMARY_ATTRIBUTE_VALUE_TEXT_X = Display::WIDTH*6/40; // Align left
-    static const int SUMMARY_ATTRIBUTE_TEXT_Y = Display::HEIGHT*13/30;
-    static const int SUMMARY_ATTRIBUTE_TEXT_SPACING = Display::HEIGHT*1/30;
 
-    static const int SUMMARY_FEATS_HEADER_TEXT_X = Display::WIDTH*1/40;
-    static const int SUMMARY_FEATS_HEADER_TEXT_Y = Display::HEIGHT*17/30;
-    static const int SUMMARY_FEATS_LABEL_TEXT_X = Display::WIDTH*3/40;
-    //static const int SUMMARY_FEATS_VALUE_TEXT_X = Display::WIDTH*4/40;
-    static const int SUMMARY_FEATS_TEXT_Y = Display::HEIGHT*18/30;
-    static const int SUMMARY_FEATS_TEXT_SPACING = Display::HEIGHT*1/30;
+    static const int SUMMARY_ATTRIBUTE_ORIGIN_X = Display::WIDTH*33/40;
+    static const int SUMMARY_ATTRIBUTE_ORIGIN_Y = Display::HEIGHT*6/40;
+    static const int SUMMARY_ATTRIBUTE_HEADER_TEXT_X = SUMMARY_ATTRIBUTE_ORIGIN_X;
+    static const int SUMMARY_ATTRIBUTE_HEADER_TEXT_Y = SUMMARY_ATTRIBUTE_ORIGIN_Y - Display::HEIGHT*1/30;
+    static const int SUMMARY_ATTRIBUTE_LABEL_TEXT_X = SUMMARY_ATTRIBUTE_ORIGIN_X; // Align right
+    static const int SUMMARY_ATTRIBUTE_VALUE_TEXT_X = SUMMARY_ATTRIBUTE_ORIGIN_X + Display::WIDTH*1/40; // Align left
+    static const int SUMMARY_ATTRIBUTE_TEXT_Y = SUMMARY_ATTRIBUTE_ORIGIN_Y;
+    static const int SUMMARY_ATTRIBUTE_TEXT_Y_OFFSET = Display::HEIGHT*1/30;
 
-    static const int SUMMARY_SKILLS_HEADER_TEXT_X = Display::WIDTH*13/40;
-    static const int SUMMARY_SKILLS_HEADER_TEXT_Y = Display::HEIGHT*5/30;
-    static const int SUMMARY_SKILLS_LABEL_TEXT_X = Display::WIDTH*17/40;
-    static const int SUMMARY_SKILLS_VALUE_TEXT_X = Display::WIDTH*18/40;
-    static const int SUMMARY_SKILLS_TEXT_Y = Display::HEIGHT*6/30;
-    static const int SUMMARY_SKILLS_TEXT_SPACING = Display::HEIGHT*1/30;
+    static const int SUMMARY_SKILLS_ORIGIN_X = Display::WIDTH* 33/40;
+    static const int SUMMARY_SKILLS_ORIGIN_Y = Display::HEIGHT* 10/30;
+    static const int SUMMARY_SKILLS_HEADER_TEXT_X = SUMMARY_SKILLS_ORIGIN_X;
+    static const int SUMMARY_SKILLS_HEADER_TEXT_Y = SUMMARY_SKILLS_ORIGIN_Y - Display::HEIGHT*1/30;
+    static const int SUMMARY_SKILLS_LABEL_TEXT_X = SUMMARY_SKILLS_ORIGIN_X;
+    static const int SUMMARY_SKILLS_VALUE_TEXT_X = SUMMARY_SKILLS_ORIGIN_X + Display::WIDTH*1/40;
+    static const int SUMMARY_SKILLS_TEXT_Y = SUMMARY_SKILLS_ORIGIN_Y;
+    static const int SUMMARY_SKILLS_TEXT_Y_OFFSET = Display::HEIGHT*1/30;
 
     static int creationMode;
     enum enumCreationModes

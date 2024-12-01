@@ -8,6 +8,7 @@
 
 struct Configuration
 {
+    static ALLEGRO_CONFIG* ancestryCfg;
     static ALLEGRO_CONFIG* cargoCfg;
     static ALLEGRO_CONFIG* placeCfg;
 
@@ -15,8 +16,9 @@ struct Configuration
     {
         al_set_standard_file_interface();
 
-
-
+        ancestryCfg = al_load_config_file("configurations/ancestryCfg.cfg");
+        if(!ancestryCfg)
+            std::cout << "beep boop ancestry" << std::endl;
         cargoCfg = al_load_config_file("configurations/cargoCfg.cfg");
         if(!cargoCfg)
             std::cout << "beep boop cargo" << std::endl;
@@ -28,6 +30,7 @@ struct Configuration
 
     static void UnloadConfigurations()
     {
+        al_destroy_config(ancestryCfg);
         al_destroy_config(cargoCfg);
         al_destroy_config(placeCfg);
     }

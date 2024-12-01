@@ -52,7 +52,7 @@ struct AncestryIndex
 
     inline static const std::map<int, std::map<int, int>> ancestryFeats
     {
-        {ANCESTRY_VERIT,  {{FeatIndex::AN_FEAT_VERIT_INQUISITIVE, 1}}},
+        {ANCESTRY_VERIT,  {{FeatIndex::AN_FEAT_VERIT_UNINHIBITED, 1}}},
 
         {ANCESTRY_YETI,   {{FeatIndex::AN_FEAT_YETI_WARM_FUR, 1},
                            {FeatIndex::AN_FEAT_YETI_HOSPITALITY, 1}}},
@@ -63,7 +63,8 @@ struct AncestryIndex
         {ANCESTRY_BEYU,   {{FeatIndex::AN_FEAT_BEYU_DISEASE_RESISTANCE, 1},
                            {FeatIndex::AN_FEAT_BEYU_POISON_TOLERANCE, 1}}},
 
-        {ANCESTRY_MESERA, {{FeatIndex::AN_FEAT_MESERA_POWER_PLANT, 1}}},
+        {ANCESTRY_MESERA, {{FeatIndex::AN_FEAT_MESERA_POWER_PLANT, 1},
+                           {FeatIndex::AN_FEAT_MESERA_CLOUDTREE_REJUVENATION, 1}}},
 
         {ANCESTRY_ORDON,  {{FeatIndex::AN_FEAT_ORDON_CARAPACE, 1}}},
 
@@ -99,7 +100,7 @@ struct AncestryIndex
 
         {ANCESTRY_HAPHAE, {{SkillIndex::SKILL_MARKSMANSHIP, 1},
                            {SkillIndex::SKILL_LANGUAGES, 1},
-                           {SkillIndex::SKILL_NEGOTIATION, 1}}},
+                           {SkillIndex::SKILL_NEGOTIATION, 1}}}
 
     };
 };

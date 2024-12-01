@@ -8,6 +8,7 @@
 #define COLKEY_TEXT_HEADER                                  Palette::COL_EARTHEN_0
 #define COLKEY_TEXT_LABEL                                   Palette::COL_EARTHEN_1
 #define COLKEY_TEXT_VALUE                                   Palette::COL_EARTHEN_2
+#define COLKEY_TEXT_DESCRIPTION                             Palette::COL_EARTHEN_3
 
 #define COLKEY_FLYINGTEXT_UP                                Palette::COL_EARTHEN_0
 #define COLKEY_FLYINGTEXT_DOWN                              Palette::COL_FLAME_1

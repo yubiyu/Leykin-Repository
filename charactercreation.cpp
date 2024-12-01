@@ -176,66 +176,71 @@ void CharacterCreation::SummaryDrawing()
 {
     creation->DrawActivity(SUMMARY_CREATION_SPRITE_X,SUMMARY_CREATION_SPRITE_Y);
 
-    al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL, SUMMARY_NAME_LABEL_TEXT_X, SUMMARY_NAME_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Name");
-    Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_VALUE, SUMMARY_NAME_VALUE_TEXT_X, SUMMARY_NAME_TEXT_Y, ALLEGRO_ALIGN_LEFT, creation->GetName());
+    al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL, SUMMARY_BIOGRAPHY_LABEL_TEXT_X, SUMMARY_NAME_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Name");
+    Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_VALUE, Palette::COLKEY_TEXT_VALUE, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_NAME_TEXT_Y, ALLEGRO_ALIGN_LEFT, creation->GetName());
 
-    al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL, SUMMARY_ANCESTRY_LABEL_TEXT_X, SUMMARY_ANCESTRY_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Ancestry");
-    Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_VALUE, SUMMARY_ANCESTRY_VALUE_TEXT_X, SUMMARY_ANCESTRY_TEXT_Y, ALLEGRO_ALIGN_LEFT, AncestryIndex::ancestryNames.at(creation->GetAncestry()));
-
-    al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL, SUMMARY_ROLE_LABEL_TEXT_X, SUMMARY_ROLE_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Role");
-    Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_VALUE, SUMMARY_ROLE_VALUE_TEXT_X, SUMMARY_ROLE_TEXT_Y, ALLEGRO_ALIGN_LEFT, creation->GetRoleString());
-
-
-    al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL, SUMMARY_HOMETOWN_LABEL_TEXT_X, SUMMARY_HOMETOWN_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Home");
-    Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_VALUE, SUMMARY_HOMETOWN_VALUE_TEXT_X, SUMMARY_HOMETOWN_TEXT_Y, ALLEGRO_ALIGN_LEFT, PlaceIndex::placeNames.at(creation->GetHometown()));
+    al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL, SUMMARY_BIOGRAPHY_LABEL_TEXT_X, SUMMARY_ANCESTRY_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Ancestry");
+    Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_VALUE, Palette::COLKEY_TEXT_VALUE, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_ANCESTRY_TEXT_Y, ALLEGRO_ALIGN_LEFT, AncestryIndex::ancestryNames.at(creation->GetAncestry()));
+    Hax::string_al_draw_multiline_text(FONTDEF_CHARACTER_CREATION_DESCRIPTION, Palette::COLKEY_TEXT_DESCRIPTION, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_ANCESTRY_TEXT_Y + SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_Y_OFFSET,
+                                       SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_WIDTH, Font::TEXT_HEIGHT_24, ALLEGRO_ALIGN_LEFT,
+                                       Encyclopedia::entries.at(Encyclopedia::CATEGORIES_LEYKIN).at(creation->GetAncestry()));
 
 
-    al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_HEADER, SUMMARY_ATTRIBUTE_HEADER_TEXT_X, SUMMARY_ATTRIBUTE_HEADER_TEXT_Y, ALLEGRO_ALIGN_LEFT, "Attributes");
-    for(size_t i = 0; i < AttributeIndex::NUM_ATTRIBUTES; i++)
-    {
-        Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL, SUMMARY_ATTRIBUTE_LABEL_TEXT_X, SUMMARY_ATTRIBUTE_TEXT_Y + i*SUMMARY_ATTRIBUTE_TEXT_SPACING, ALLEGRO_ALIGN_RIGHT, AttributeIndex::attributeNames.at(i));
-        Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_VALUE, SUMMARY_ATTRIBUTE_VALUE_TEXT_X, SUMMARY_ATTRIBUTE_TEXT_Y + i*SUMMARY_ATTRIBUTE_TEXT_SPACING, ALLEGRO_ALIGN_LEFT, creation->attributesString[i]);
-    }
+    al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL, SUMMARY_BIOGRAPHY_LABEL_TEXT_X, SUMMARY_ROLE_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Role");
+    Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_VALUE, Palette::COLKEY_TEXT_VALUE, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_ROLE_TEXT_Y, ALLEGRO_ALIGN_LEFT, creation->GetRoleString());
 
-    al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_HEADER, SUMMARY_FEATS_HEADER_TEXT_X, SUMMARY_FEATS_HEADER_TEXT_Y, ALLEGRO_ALIGN_LEFT, "Feats");
+    al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL, SUMMARY_BIOGRAPHY_LABEL_TEXT_X, SUMMARY_HOMETOWN_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Home");
+    Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_VALUE, Palette::COLKEY_TEXT_VALUE, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_HOMETOWN_TEXT_Y, ALLEGRO_ALIGN_LEFT, PlaceIndex::placeNames.at(creation->GetHometown()));
+    Hax::string_al_draw_multiline_text(FONTDEF_CHARACTER_CREATION_DESCRIPTION, Palette::COLKEY_TEXT_DESCRIPTION, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_HOMETOWN_TEXT_Y + SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_Y_OFFSET,
+                                       SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_WIDTH, Font::TEXT_HEIGHT_24, ALLEGRO_ALIGN_LEFT,
+                                       Encyclopedia::entries.at(Encyclopedia::CATEGORIES_PLACES).at(creation->GetHometown()));
 
     int featsTextYOffset = 0;
     for(std::map<int,int>::iterator it = creation->ancestryFeats.begin(); it != creation->ancestryFeats.end(); ++it)
     {
-        Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL,
+        Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL,
                                  SUMMARY_FEATS_LABEL_TEXT_X, SUMMARY_FEATS_TEXT_Y + featsTextYOffset, ALLEGRO_ALIGN_LEFT,
                                  FeatIndex::ancestryFeatNames.at((*it).first));
-        featsTextYOffset += SUMMARY_FEATS_TEXT_SPACING;
+        featsTextYOffset += SUMMARY_FEATS_TEXT_Y_OFFSET;
     }
     for(std::map<int,int>::iterator it = creation->roleFeats.begin(); it != creation->roleFeats.end(); ++it)
     {
-        Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL,
+        Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL,
                                   SUMMARY_FEATS_LABEL_TEXT_X, SUMMARY_FEATS_TEXT_Y + featsTextYOffset, ALLEGRO_ALIGN_LEFT,
                                    FeatIndex::roleFeatNames.at((*it).first));
-        featsTextYOffset += SUMMARY_FEATS_TEXT_SPACING;
+        featsTextYOffset += SUMMARY_FEATS_TEXT_Y_OFFSET;
     }
 
-    al_draw_text(Font::monogram32, COLKEY_TEXT_HEADER, SUMMARY_SKILLS_HEADER_TEXT_X, SUMMARY_SKILLS_HEADER_TEXT_Y, ALLEGRO_ALIGN_LEFT, "Skills");
+    al_draw_text(FONTDEF_CHARACTER_CREATION_HEADER, Palette::COLKEY_TEXT_HEADER, SUMMARY_ATTRIBUTE_HEADER_TEXT_X, SUMMARY_ATTRIBUTE_HEADER_TEXT_Y, ALLEGRO_ALIGN_LEFT, "Attributes");
+    for(size_t i = 0; i < AttributeIndex::NUM_ATTRIBUTES; i++)
+    {
+        Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL, SUMMARY_ATTRIBUTE_LABEL_TEXT_X, SUMMARY_ATTRIBUTE_TEXT_Y + i*SUMMARY_ATTRIBUTE_TEXT_Y_OFFSET, ALLEGRO_ALIGN_RIGHT, AttributeIndex::attributeNames.at(i));
+        Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_VALUE, Palette::COLKEY_TEXT_VALUE, SUMMARY_ATTRIBUTE_VALUE_TEXT_X, SUMMARY_ATTRIBUTE_TEXT_Y + i*SUMMARY_ATTRIBUTE_TEXT_Y_OFFSET, ALLEGRO_ALIGN_LEFT, creation->attributesString[i]);
+    }
+
+    al_draw_text(FONTDEF_CHARACTER_CREATION_HEADER, Palette::COLKEY_TEXT_HEADER, SUMMARY_FEATS_HEADER_TEXT_X, SUMMARY_FEATS_HEADER_TEXT_Y, ALLEGRO_ALIGN_LEFT, "Feats");
+
+    al_draw_text(FONTDEF_CHARACTER_CREATION_HEADER, COLKEY_TEXT_HEADER, SUMMARY_SKILLS_HEADER_TEXT_X, SUMMARY_SKILLS_HEADER_TEXT_Y, ALLEGRO_ALIGN_LEFT, "Skills");
 
     int skillsTextYOffset = 0;
     for(std::map<int,int>::iterator it = creation->totalSkills.begin(); it != creation->totalSkills.end(); ++it)
     {
-        Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_LABEL,
+        Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL,
                                  SUMMARY_SKILLS_LABEL_TEXT_X, SUMMARY_SKILLS_TEXT_Y + skillsTextYOffset, ALLEGRO_ALIGN_RIGHT,
                                  SkillIndex::skillNames.at((*it).first));
 
-        Hax::string_al_draw_text(Font::monogram32, Palette::COLKEY_TEXT_VALUE,
+        Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_VALUE, Palette::COLKEY_TEXT_VALUE,
                                  SUMMARY_SKILLS_VALUE_TEXT_X, SUMMARY_SKILLS_TEXT_Y + skillsTextYOffset, ALLEGRO_ALIGN_LEFT,
                                  creation->totalSkillsString[(*it).first]);
 
-        skillsTextYOffset += SUMMARY_SKILLS_TEXT_SPACING;
+        skillsTextYOffset += SUMMARY_SKILLS_TEXT_Y_OFFSET;
 
         if((*it).first == SkillIndex::BODY_SKILLS_MARKER_END || (*it).first == SkillIndex::MIND_SKILLS_MARKER_END /* || (*it).first == SkillIndex::SPIRIT_SKILLS_MARKER_END */)
-            skillsTextYOffset += SUMMARY_SKILLS_TEXT_SPACING;// line break
+            skillsTextYOffset += SUMMARY_SKILLS_TEXT_Y_OFFSET;// line break
     }
 
 
-    al_draw_text(Font::monogram32, COLKEY_TEXT_HEADER, Display::WIDTH/2, Display::HEIGHT - 100, 0, "R: Reroll || Enter: Proceed");
+    al_draw_text(FONTDEF_CHARACTER_CREATION_HEADER, COLKEY_TEXT_HEADER, Display::WIDTH/2, 64, ALLEGRO_ALIGN_CENTER, "R: Reroll || Enter: Proceed");
 }
 
 void CharacterCreation::RandomizeAll()

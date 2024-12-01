@@ -4,11 +4,16 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
-#define FONTDEF_OVERWORLD_PLACENAME          Font::builtin8
+#define FONTDEF_OVERWORLD_PLACENAME              Font::builtin8
 
-#define FONTDEF_BUBBLEVIEW_HEADER            Font::builtin8
-#define FONTDEF_BUBBLEVIEW_LABEL             Font::builtin8
-#define FONTDEF_BUBBLEVIEW_VALUE             Font::builtin8
+#define FONTDEF_BUBBLEVIEW_HEADER                Font::builtin8
+#define FONTDEF_BUBBLEVIEW_LABEL                 Font::builtin8
+#define FONTDEF_BUBBLEVIEW_VALUE                 Font::builtin8
+
+#define FONTDEF_CHARACTER_CREATION_HEADER        Font::monogram32
+#define FONTDEF_CHARACTER_CREATION_LABEL         Font::monogram32
+#define FONTDEF_CHARACTER_CREATION_VALUE         Font::monogram32
+#define FONTDEF_CHARACTER_CREATION_DESCRIPTION   Font::monogram24
 
 struct Font
 {
@@ -20,12 +25,10 @@ struct Font
     static const int TEXT_HEIGHT_48 = 48;
     static const int NUM_FONT_SIZES = 4;
 
-
     static ALLEGRO_FONT *builtin8;
     static ALLEGRO_FONT *monogram16;
     static ALLEGRO_FONT *monogram24;
     static ALLEGRO_FONT *monogram32;
-    static ALLEGRO_FONT *monogram[NUM_FONT_SIZES];
 
     static void Initialize();
     static void Uninitialize();

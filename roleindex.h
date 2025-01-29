@@ -1,6 +1,6 @@
-#ifndef ROLE_H_INCLUDED
-#define ROLE_H_INCLUDED
+#pragma once
 
+#include "configuration.h"
 #include "attributeindex.h"
 #include "featindex.h"
 #include "skillindex.h"
@@ -15,7 +15,7 @@ struct RoleIndex
         ROLE_EXILE = 3,      // Survivalists by necessity.
         ROLE_BANDIT = 4,     // The bane of travellers.
         ROLE_WARRIOR = 5,    // The study of arms.
-        ROLE_HUNTER = 6,     // Specialists at subduing beasts.
+        ROLE_BEASTKIN = 6,     // Specialists at subduing beasts.
         ROLE_APOSTLE = 7,    // Servants of the gods.
         ROLE_MERCHANT = 8,   // Profits by exchange.
         ROLE_HEALER = 9,     // Menders and curers.
@@ -26,6 +26,9 @@ struct RoleIndex
     static const int ROLE_MARKER_LAST = ROLE_DANCER;
     static const int NUM_ROLES = ROLE_MARKER_LAST+1;
 
+    static std::map<int, std::string>roleNames;
+
+    /*
     inline static const std::map<unsigned,std::string>roleNames
     {
         {ROLE_CARAVANEER, "Caravaneer"},
@@ -34,15 +37,16 @@ struct RoleIndex
         {ROLE_EXILE, "Exile"},
         {ROLE_BANDIT, "Bandit"},
         {ROLE_WARRIOR, "Warrior"},
-        {ROLE_HUNTER, "Hunter"},
+        {ROLE_BEASTKIN, "Beastkin"},
         {ROLE_APOSTLE, "Apostle"},
         {ROLE_MERCHANT, "Merchant"},
         {ROLE_HEALER, "Healer"},
         {ROLE_MINSTREL, "Minstrel"},
         {ROLE_DANCER, "Dancer"}
     };
+    */
 
-    inline static const std::map<int, std::array<int,AttributeIndex::NUM_ATTRIBUTES>>roleAttributeBonus
+    inline static const std::map<int, std::array<int, AttributeIndex::NUM_ATTRIBUTES>>roleAttributeBonus
     {                        //b  m  s
         {ROLE_CARAVANEER,     {2, 3, 5}},
         {ROLE_MESSENGER,      {3, 3, 4}},
@@ -50,7 +54,7 @@ struct RoleIndex
         {ROLE_EXILE,          {4, 4, 2}},
         {ROLE_BANDIT,         {5, 2, 3}},
         {ROLE_WARRIOR,        {7, 2, 1}},
-        {ROLE_HUNTER,         {3, 5, 2}},
+        {ROLE_BEASTKIN,         {3, 5, 2}},
         {ROLE_APOSTLE,        {0, 1, 9}},
         {ROLE_MERCHANT,       {1, 5, 4}},
         {ROLE_HEALER,         {1, 5, 4}},
@@ -66,7 +70,7 @@ struct RoleIndex
         {ROLE_EXILE,       {{FeatIndex::ROLE_FEAT_EXILE_WASTEWALKER, 1}}},
         {ROLE_BANDIT,      {{FeatIndex::ROLE_FEAT_BANDIT_INTIMIDATION, 1}}},
         {ROLE_WARRIOR,     {{FeatIndex::ROLE_FEAT_WARRIOR_RESOLUTE, 1}}},
-        {ROLE_HUNTER,      {{FeatIndex::ROLE_FEAT_HUNTER_PREPARATION, 1}}},
+        {ROLE_BEASTKIN,      {{FeatIndex::ROLE_FEAT_BEASTKIN_PREPARATION, 1}}},
         {ROLE_APOSTLE,     {{FeatIndex::ROLE_FEAT_APOSTLE_GREATER_PURPOSE, 1}}},
         {ROLE_MERCHANT,    {{FeatIndex::ROLE_FEAT_MERCHANT_APPRAISAL, 1}}},
         {ROLE_HEALER,      {{FeatIndex::ROLE_FEAT_HEALER_PREVENTATIVE_MEASURES, 1}}},
@@ -106,7 +110,7 @@ struct RoleIndex
                            {SkillIndex::SKILL_TACTICS, 1},
                            {SkillIndex::SKILL_LEADERSHIP, 1}}},
 
-        {ROLE_HUNTER,     {{SkillIndex::SKILL_DANCE, 1},
+        {ROLE_BEASTKIN,     {{SkillIndex::SKILL_DANCE, 1},
                            {SkillIndex::SKILL_MARKSMANSHIP, 1},
                            {SkillIndex::SKILL_BEAST_TONGUE, 2},
                            {SkillIndex::SKILL_PERCEPTION, 1}}},
@@ -131,7 +135,6 @@ struct RoleIndex
                            {SkillIndex::SKILL_FAITH, 1},
                            {SkillIndex::SKILL_MUSIC, 2}}},
 
-
         {ROLE_DANCER,     {{SkillIndex::SKILL_DANCE, 2},
                            {SkillIndex::SKILL_MARKSMANSHIP, 1},
                            {SkillIndex::SKILL_NEGOTIATION, 1},
@@ -139,6 +142,13 @@ struct RoleIndex
 
     };
 
-};
+    static void ApplyStringConfigurations()
+    {
+        for(unsigned i = ROLE_MARKER_FIRST; i <= ROLE_MARKER_LAST; i++)
+        {
+            std::string section = "role " + std::to_string(i);
+            roleNames[i] = Configuration::ReturnString(Configuration::roleCfg, section.c_str(), "name");
+        }
+    }
 
-#endif // ROLE_H_INCLUDED
+};

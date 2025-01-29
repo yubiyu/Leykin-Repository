@@ -5,7 +5,10 @@
 #include <allegro5/allegro_primitives.h>
 
 #include "display.h"
+
 #include "tile.h"
+
+#include "gamemode.h"
 
 #include "encyclopedia.h"
 

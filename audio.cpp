@@ -9,7 +9,7 @@ ALLEGRO_SAMPLE* Audio::manorMacLeodMp3;
 ALLEGRO_SAMPLE_INSTANCE* Audio::cottagesParallelSampleInstance;
 ALLEGRO_SAMPLE_INSTANCE* Audio::manorParallelSampleInstance;
 
-int Audio::overworldParallelSampleInstanceCurrentPart;
+int Audio::worldviewParallelSampleInstanceCurrentPart;
 
 float Audio::bgmGain;
 float Audio::sfxGain;
@@ -98,10 +98,10 @@ void Audio::SetActiveBgm(ALLEGRO_SAMPLE* whichBgm)
     al_play_sample_instance(activeBgmInstance);
 }
 
-void Audio::OverworldParallelAudioUpdate()
+void Audio::WorldviewParallelAudioUpdate()
 {
 
-    if(overworldParallelSampleInstanceCurrentPart == AUDIO_OPS_COTTAGES)
+    if(worldviewParallelSampleInstanceCurrentPart == AUDIO_OPS_COTTAGES)
     {
         if(al_get_sample_instance_gain(Audio::cottagesParallelSampleInstance) < 1.0)
             al_set_sample_instance_gain(Audio::cottagesParallelSampleInstance, al_get_sample_instance_gain(Audio::cottagesParallelSampleInstance) + 0.05);
@@ -110,7 +110,7 @@ void Audio::OverworldParallelAudioUpdate()
             al_set_sample_instance_gain(Audio::manorParallelSampleInstance, al_get_sample_instance_gain(Audio::manorParallelSampleInstance) - 0.05);
     }
 
-    if(overworldParallelSampleInstanceCurrentPart == AUDIO_OPS_MANOR) // Don't else if
+    if(worldviewParallelSampleInstanceCurrentPart == AUDIO_OPS_MANOR) // Don't else if
     {
         if(al_get_sample_instance_gain(Audio::manorParallelSampleInstance) < 1.0)
             al_set_sample_instance_gain(Audio::manorParallelSampleInstance, al_get_sample_instance_gain(Audio::manorParallelSampleInstance) + 0.05);
@@ -121,7 +121,7 @@ void Audio::OverworldParallelAudioUpdate()
 
 }
 
-void Audio::OverworldBeginParallelBackgroundAudio()
+void Audio::WorldviewBeginParallelBackgroundAudio()
 {
     al_set_sample_instance_playmode(Audio::cottagesParallelSampleInstance, ALLEGRO_PLAYMODE_LOOP);
     al_set_sample_instance_playmode(Audio::manorParallelSampleInstance, ALLEGRO_PLAYMODE_LOOP);
@@ -132,23 +132,23 @@ void Audio::OverworldBeginParallelBackgroundAudio()
     al_play_sample_instance(Audio::cottagesParallelSampleInstance);
     al_play_sample_instance(Audio::manorParallelSampleInstance);
 
-    overworldParallelSampleInstanceCurrentPart = AUDIO_OPS_COTTAGES;
+    worldviewParallelSampleInstanceCurrentPart = AUDIO_OPS_COTTAGES;
 }
 
-void Audio::OverworldEndParallelBackgroundAudio()
+void Audio::WorldviewEndParallelBackgroundAudio()
 {
     al_stop_sample_instance(Audio::cottagesParallelSampleInstance);
     al_stop_sample_instance(Audio::manorParallelSampleInstance);
 }
 
-void Audio::OverworldSwapParallelBackgroundAudioToPlace()
+void Audio::WorldviewSwapParallelBackgroundAudioToPlace()
 {
-    overworldParallelSampleInstanceCurrentPart = AUDIO_OPS_MANOR;
+    worldviewParallelSampleInstanceCurrentPart = AUDIO_OPS_MANOR;
 }
 
-void Audio::OverworldSwapParallelBackgroundAudioToField()
+void Audio::WorldviewSwapParallelBackgroundAudioToField()
 {
-    overworldParallelSampleInstanceCurrentPart = AUDIO_OPS_COTTAGES;
+    worldviewParallelSampleInstanceCurrentPart = AUDIO_OPS_COTTAGES;
 }
 
 

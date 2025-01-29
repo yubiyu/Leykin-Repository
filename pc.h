@@ -4,8 +4,9 @@
 
 class PC : public Being
 {
-
 public:
+    static PC*pc;
+
     PC();
     ~PC();
 };

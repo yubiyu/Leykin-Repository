@@ -11,6 +11,7 @@
 #include "palette.h"
 
 #include "pc.h"
+#include "caravan.h"
 
 #include "hax.h"
 

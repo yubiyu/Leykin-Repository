@@ -1,6 +1,7 @@
 #include "caravan.h"
 
 std::vector<Caravan*> Caravan::caravans;
+Caravan* Caravan::pcCaravan;
 
 Caravan::Caravan()
 {
@@ -59,9 +60,9 @@ int Caravan::SelectRandomTradeDestination()
     return result;
 }
 
-void Caravan::UpdateOverworldPosition()
+void Caravan::UpdateWorldviewPosition()
 {
-    float previousOverworldXPosition = overworldXPosition;
+    float previousWorldviewXPosition = worldviewXPosition;
 
     if(distanceFromNextWaypoint <= 0)
     {
@@ -79,15 +80,15 @@ void Caravan::UpdateOverworldPosition()
     {
         timeToNextWaypoint = distanceFromNextWaypoint / travelSpeed;
 
-        overworldXPosition += (overworldXDestination - overworldXPosition) / timeToNextWaypoint;
-        overworldYPosition += (overworldYDestination - overworldYPosition) / timeToNextWaypoint;
+        worldviewXPosition += (worldviewXDestination - worldviewXPosition) / timeToNextWaypoint;
+        worldviewYPosition += (worldviewYDestination - worldviewYPosition) / timeToNextWaypoint;
 
         //std::cout << "T from waypoint: " << timeToNextWaypoint << std::endl;
-        //std::cout << "D from waypoint: " << distanceFromNextWaypoint << ", X: " << overworldXPosition << " , Y: " << overworldXPosition << std::endl;
+        //std::cout << "D from waypoint: " << distanceFromNextWaypoint << ", X: " << worldviewXPosition << " , Y: " << worldviewXPosition << std::endl;
 
-        if(overworldXPosition != previousOverworldXPosition) // Prevents defaulting to left-facing when moving up or down vertical roads.
+        if(worldviewXPosition != previousWorldviewXPosition) // Prevents defaulting to left-facing when moving up or down vertical roads.
         {
-            if(overworldXPosition > previousOverworldXPosition)
+            if(worldviewXPosition > previousWorldviewXPosition)
                 caravanLeader->facingLeft = false;
             else
                 caravanLeader->facingLeft = true;
@@ -95,7 +96,7 @@ void Caravan::UpdateOverworldPosition()
     }
 }
 
-void Caravan::OverworldLogic()
+void Caravan::WorldviewLogic()
 {
 
     if(onRoad)
@@ -109,7 +110,7 @@ void Caravan::OverworldLogic()
         else
         {
             distanceFromNextWaypoint -= travelSpeed;
-            UpdateOverworldPosition();
+            UpdateWorldviewPosition();
         }
     }
     else if(atPlace)
@@ -198,8 +199,8 @@ void Caravan::MoveToPlace(Place *p)
     currentHoursAtPlace = 0;
     thresholdHoursAtPlace = rand()%(MAX_HOURS_AT_PLACE-MIN_HOURS_AT_PLACE) + MIN_HOURS_AT_PLACE;
 
-    overworldXPosition = p->overworldXPosition;
-    overworldYPosition = p->overworldYPosition;
+    worldviewXPosition = p->worldviewXPosition;
+    worldviewYPosition = p->worldviewYPosition;
 
     if(caravanLeader != nullptr)
         caravanLeader->facingLeft = false;
@@ -216,7 +217,7 @@ void Caravan::MoveToRoad(Road *r, bool isReverseRoad)
         whichPlace->RemoveFromCaravanserai(this);
 
     atPlace = false;
-    // Do *not* whichPlace = nullptr; as it will cause a crash when iterating through whichPlace->connections in OverworldLogic()
+    // Do *not* whichPlace = nullptr; as it will cause a crash when iterating through whichPlace->connections in WorldviewLogic()
 
     atHome = false;
 
@@ -264,10 +265,10 @@ void Caravan::MoveToRoadSegment(int a, bool isReverseRoad)
 
     if(!atRoadsEnd)
     {
-        overworldXDestination = whichRoad->xWaypoints[nextWaypoint];
-        overworldYDestination = whichRoad->yWaypoints[nextWaypoint];
-        overworldXPosition = whichRoad->xWaypoints[currentWaypoint];
-        overworldYPosition = whichRoad->yWaypoints[currentWaypoint];
+        worldviewXDestination = whichRoad->xWaypoints[nextWaypoint];
+        worldviewYDestination = whichRoad->yWaypoints[nextWaypoint];
+        worldviewXPosition = whichRoad->xWaypoints[currentWaypoint];
+        worldviewYPosition = whichRoad->yWaypoints[currentWaypoint];
         roadSegmentLength = whichRoad->ReturnSegmentLength(currentWaypoint, nextWaypoint);
         distanceFromNextWaypoint = roadSegmentLength;
     }
@@ -306,7 +307,7 @@ void Caravan::UpdateCargoWeight()
 {
     float result = 0;
 
-    for(std::map<int,float>::iterator it = inventory.cargo.begin(); it != inventory.cargo.end(); ++it)
+    for(std::map<int,int>::iterator it = inventory.cargo.begin(); it != inventory.cargo.end(); ++it)
         result += (*it).second;
 
     cargoWeight = result;
@@ -374,12 +375,12 @@ void Caravan::AllBubblesNeedUpdate()
     pathfindingBubbleNeedsUpdate = true;
 }
 
-void Caravan::DrawSpriteOnOverworld()
+void Caravan::DrawSpriteOnWorldview()
 {
     if(onRoad)
     {
-        ///DrawActivity(overworldXPosition - overworldCameraXPosition,overworldYPosition - overworldCameraYPosition);
-        DrawActivity(overworldXPosition - Camera::xPosition, overworldYPosition - Camera::yPosition);
+        ///DrawActivity(worldviewXPosition - worldviewCameraXPosition,worldviewYPosition - worldviewCameraYPosition);
+        DrawActivity(worldviewXPosition - Camera::xPosition, worldviewYPosition - Camera::yPosition);
     }
 
     else if(atPlace /* and the open place interface is equal to whichPlace */)
@@ -393,4 +394,12 @@ void Caravan::DrawActivity(float x, float y)
     caravanLeader->DrawActivity(x, y);
 }
 
+bool Caravan::CheckContainsBeing(Being *b)
+{
+    std::vector<Being*>::iterator it = std::find(members.begin(), members.end(), b);
+    if(it != members.end())
+        return true;
+    else
+        return false;
+}
 

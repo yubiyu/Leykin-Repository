@@ -9,7 +9,7 @@ float Camera::zoomScale;
 float Camera::zoomTranslateX;
 float Camera::zoomTranslateY;
 
-bool Camera::overworldCameraMousePanningDisabled;
+bool Camera::worldviewCameraMousePanningDisabled;
 float Camera::mouseTransformedX;
 float Camera::mouseTransformedY;
 
@@ -26,7 +26,7 @@ float Camera::yDestination;
 void Camera::Initialize()
 {
     al_identity_transform(&identityTransform);
-    cameraBuffer = al_create_bitmap(Arena::WIDTH, Arena::HEIGHT);
+    cameraBuffer = al_create_bitmap(FrameIndex::WORLDVIEW_VIEWPORT_W, FrameIndex::WORLDVIEW_VIEWPORT_H);
 
     atDestination = true;
     approachingDestination = false;
@@ -81,9 +81,7 @@ void Camera::Logic()
             yPosition = MIN_Y_POSITION;
         if(yPosition > MAX_Y_POSITION)
             yPosition = MAX_Y_POSITION;
-
     }
-
 }
 
 void Camera::ApproachDestinationLinear(float change)

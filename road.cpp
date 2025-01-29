@@ -758,7 +758,7 @@ void Road::SetSovereignty(int whichSovereignty)
     }
 }
 
-void Road::DrawSegmentsOnOverworld()
+void Road::DrawSegmentsOnWorldview()
 {
     al_draw_filled_circle(xWaypoints[0] - Camera::xPosition,
                           yWaypoints[0] - Camera::yPosition,

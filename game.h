@@ -15,7 +15,9 @@
 #include "hax.h"
 
 #include "title.h"
-#include "overworld.h"
+#include "worldview.h"
+#include "partyview.h"
+#include "cargoview.h"
 #include "settings.h"
 #include "archive.h"
 #include "charactercreation.h"

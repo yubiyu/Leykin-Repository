@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <string>
 
+#include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
@@ -36,6 +37,12 @@ struct Hax
     {
         float y = y1 + (y2 - y1) * (x - x1) / (x2 - x1);
         return y;
+    }
+
+    static void DrawPlaceholder32(float x, float y)
+    {
+        al_draw_filled_rectangle(x, y, x+32, y+32, al_map_rgb(100,100,100));
+
     }
 
     static int string_al_get_text_width(const ALLEGRO_FONT *f, std::string str)

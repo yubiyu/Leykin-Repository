@@ -1,22 +1,29 @@
-#ifndef SCENE_H_INCLUDED
-#define SCENE_H_INCLUDED
+#pragma once
 
 struct Scene
 {
     enum enumScene
     {
         SCENE_TITLE,
-        SCENE_OVERWORLD,
+
+        SCENE_WORLDVIEW,
+        SCENE_PARTYVIEW,
+        SCENE_CARGOVIEW,
+
         SCENE_ARCHIVE,
         SCENE_SETTINGS,
-        SCENE_CHARACTER_CREATION
+        SCENE_CHARACTER_CREATION,
     };
     static int scene;
 
     enum enumInputContext
     {
         INPUT_CONTEXT_TITLE,
-        INPUT_CONTEXT_OVERWORLD,
+
+        INPUT_CONTEXT_WORLDVIEW,
+        INPUT_CONTEXT_PARTYVIEW,
+        INPUT_CONTEXT_CARGOVIEW,
+
         INPUT_CONTEXT_ARCHIVE,
         INPUT_CONTEXT_SETTINGS,
         INPUT_CONTEXT_CHARACTER_CREATION
@@ -27,6 +34,3 @@ struct Scene
     static void ChangeScene(int whichScene);
     static void ChangeInputContext(int whichContext);
 };
-
-
-#endif // SCENE_H_INCLUDED

@@ -10,8 +10,8 @@ Place::Place(int id)
 
     sovereignty = PlaceIndex::placeSovereignties.at(placeIdentity);
 
-    overworldXPosition = PlaceIndex::placeOverworldXYCells.at(placeIdentity)[0] *Tile::WIDTH;
-    overworldYPosition = PlaceIndex::placeOverworldXYCells.at(placeIdentity)[1] *Tile::HEIGHT;
+    worldviewXPosition = PlaceIndex::placeWorldviewXYCells.at(placeIdentity)[0] *Tile::WIDTH;
+    worldviewYPosition = PlaceIndex::placeWorldviewXYCells.at(placeIdentity)[1] *Tile::HEIGHT;
 
     for(unsigned i = EXP_MARKER_FIRST; i <= EXP_MARKER_LAST; i++)
     {
@@ -77,6 +77,7 @@ void Place::NewCitizenCaravan()
 
     newCaravanLeader->SetHometown(placeIdentity);
     newCaravanLeader->SetAncestry(std::rand()%(AncestryIndex::ANCESTRY_MARKER_LAST-AncestryIndex::ANCESTRY_MARKER_FIRST+1));
+    newCaravanLeader->SetRole(std::rand()%(RoleIndex::ROLE_MARKER_LAST-RoleIndex::ROLE_MARKER_FIRST+1));
     newCaravanLeader->SetName(AncestryIndex::ancestryNames.at(newCaravanLeader->GetAncestry()) + " " + std::to_string(std::rand()%999));
 
 
@@ -172,7 +173,7 @@ void Place::DeductJobInputs(Industry* whichIndustry)
     for(std::map<unsigned,float>::iterator it = whichIndustry->inputs.begin(); it != whichIndustry->inputs.end(); ++it)
     {
         RemoveMarketStock((*it).first, (*it).second);
-        QueueDownFlyingText((*it).first, "-" + std::to_string((int)(*it).second), overworldXPosition, overworldYPosition);
+        QueueDownFlyingText((*it).first, "-" + std::to_string((int)(*it).second), worldviewXPosition, worldviewYPosition);
     }
 }
 
@@ -205,7 +206,7 @@ void Place::ProgressProduction()
             for(std::map<unsigned,float>::iterator jt = (*it)->outputs.begin(); jt != (*it)->outputs.end(); ++jt)
             {
                 AddMarketStock((*jt).first, (*jt).second);
-                QueueUpFlyingText((*jt).first, "+" + std::to_string((int)(*jt).second), overworldXPosition, overworldYPosition);
+                QueueUpFlyingText((*jt).first, "+" + std::to_string((int)(*jt).second), worldviewXPosition, worldviewYPosition);
             }
 
             (*it)->SetJobStateDeductionsNecessary();
@@ -236,7 +237,7 @@ void Place::ProgressMaintainenceConsumption()
                     if(maintainenceConsumptionQuantityOnTick.at(i) <= market.cargo.at(i))
                     {
                         RemoveMarketStock(i, maintainenceConsumptionQuantityOnTick.at(i));
-                        QueueDownFlyingText(i, "-" + std::to_string((int)maintainenceConsumptionQuantityOnTick.at(i)), overworldXPosition, overworldYPosition);
+                        QueueDownFlyingText(i, "-" + std::to_string((int)maintainenceConsumptionQuantityOnTick.at(i)), worldviewXPosition, worldviewYPosition);
 
 #ifdef debug_output_place_progress_maintainence_consumption
                         std::cout << placeNames.at(placeIdentity) << " consumed " << (int)maintainenceConsumptionQuantity(i);
@@ -491,7 +492,7 @@ void Place::UnloadCaravanToMarketBuffer(Caravan *c)
                 {
                     c->UpdateTradeRecordQuantities(*it,transferQuantity*(-1));
                     TransferCaravanStockToMarketBufferStock(c, *it, transferQuantity);
-                    ///QueueUpFlyingText(*it, "+" + std::to_string(transferQuantity), overworldXPosition, overworldYPosition);
+                    ///QueueUpFlyingText(*it, "+" + std::to_string(transferQuantity), worldviewXPosition, worldviewYPosition);
                 }
             }
         }
@@ -514,7 +515,7 @@ void Place::UnloadCaravanToMarketBuffer(Caravan *c)
                 {
                     c->UpdateTradeRecordQuantities(*rit,transferQuantity*(-1));
                     TransferCaravanStockToMarketBufferStock(c, *rit, transferQuantity);
-                    ///QueueUpFlyingText(*rit, "+" + std::to_string(transferQuantity), overworldXPosition, overworldYPosition);
+                    ///QueueUpFlyingText(*rit, "+" + std::to_string(transferQuantity), worldviewXPosition, worldviewYPosition);
                 }
             }
 
@@ -564,7 +565,7 @@ void Place::LoadCaravan(Caravan *c)
                     // Must record transaction before transfering items out of city market inventory or it'll record quantity as zero.
                     c->UpdateTradeRecordQuantities(*it, transferQuantity);
                     TransferMarketStockToCaravanStock(c, *it, transferQuantity);
-                    ///QueueDownFlyingText(*it, "-" + std::to_string(transferQuantity), overworldXPosition, overworldYPosition);
+                    ///QueueDownFlyingText(*it, "-" + std::to_string(transferQuantity), worldviewXPosition, worldviewYPosition);
                 }
             }
         }
@@ -673,7 +674,7 @@ void Place::TransferCaravanStockToMarketBufferStock(Caravan* c, int a, float b)
 // Dump entire buffer to market
 void Place::DumpMarketBufferStockToMarketStock()
 {
-    for(std::map<int, float>::iterator it = marketBuffer.cargo.begin(); it != marketBuffer.cargo.end(); ++it)
+    for(std::map<int, int>::iterator it = marketBuffer.cargo.begin(); it != marketBuffer.cargo.end(); ++it)
     {
         int item = it->first;
         float quantity = it->second;
@@ -724,25 +725,25 @@ void Place::ProgressPlaceIndustriesBubbleProgressBars()
         (*it)->UpdateProgressBar();
 }
 
-void Place::DrawSpriteOnOverworld()
+void Place::DrawSpriteOnWorldview()
 {
-    float drawX = overworldXPosition - Camera::xPosition - OVERWORLD_SPRITE_W/2;
-    float drawY = overworldYPosition - Camera::yPosition - OVERWORLD_SPRITE_H/2;
+    float drawX = worldviewXPosition - Camera::xPosition - WORLDVIEW_SPRITE_W/2;
+    float drawY = worldviewYPosition - Camera::yPosition - WORLDVIEW_SPRITE_H/2;
 
-    //if(drawX > Camera::OVERWORLD_MIN_DRAW_X && drawX < Camera::OVERWORLD_MAX_DRAW_X
-    //        && drawY > Camera::OVERWORLD_MIN_DRAW_Y && drawY < Camera::OVERWORLD_MAX_DRAW_Y)
+    //if(drawX > Camera::WORLDVIEW_MIN_DRAW_X && drawX < Camera::WORLDVIEW_MAX_DRAW_X
+    //        && drawY > Camera::WORLDVIEW_MIN_DRAW_Y && drawY < Camera::WORLDVIEW_MAX_DRAW_Y)
     //{
-        float nameDrawX = overworldXPosition - Camera::xPosition;
-        float nameDrawY = overworldYPosition - Camera::yPosition + OVERWORLD_SPRITE_H/2;
+        float nameDrawX = worldviewXPosition - Camera::xPosition;
+        float nameDrawY = worldviewYPosition - Camera::yPosition + WORLDVIEW_SPRITE_H/2;
 
-        al_draw_bitmap_region(Image::overworldPlacePng,
+        al_draw_bitmap_region(Image::worldviewPlacePng,
                               0 + placeIdentity*64, 0,
                               64,64,
                               drawX,
                               drawY,
                               0);
 
-        Hax::string_al_draw_text(FONTDEF_OVERWORLD_PLACENAME, COLKEY_TEXT_VALUE, nameDrawX, nameDrawY, ALLEGRO_ALIGN_CENTER, name);
+        Hax::string_al_draw_text(FONTDEF_WORLDVIEW_PLACENAME, COLKEY_TEXT_VALUE, nameDrawX, nameDrawY, ALLEGRO_ALIGN_CENTER, name);
     //}
 }
 
@@ -756,7 +757,7 @@ void Place::QueueDownFlyingText(int ic, std::string t, float x, float y)
     downFlyingTexts.push_back(new FlyingText(ic, t, x, y, false));
 
     //for(std::vector<FlyingText*>::iterator it = downFlyingTexts.begin(); it != downFlyingTexts.end(); ++it)
-    //  (*it)->overworldYPosition += Tile::MINI_HEIGHT;
+    //  (*it)->worldviewYPosition += Tile::MINI_HEIGHT;
 }
 
 void Place::ProgressFlyingTexts()
@@ -780,7 +781,7 @@ void Place::ProgressFlyingTexts()
                     (*it)->queued = false;
                     for(std::vector<FlyingText*>::iterator rjt = it; rjt != upFlyingTexts.begin(); --rjt)
                     {
-                        (*(rjt-1))->overworldYPosition -= Tile::MINI_HEIGHT;
+                        (*(rjt-1))->worldviewYPosition -= Tile::MINI_HEIGHT;
                     }
                 }
             }
@@ -809,7 +810,7 @@ void Place::ProgressFlyingTexts()
                     (*it)->queued = false;
                     for(std::vector<FlyingText*>::iterator rjt = it; rjt != downFlyingTexts.begin(); --rjt)
                     {
-                        (*(rjt-1))->overworldYPosition += Tile::MINI_HEIGHT;
+                        (*(rjt-1))->worldviewYPosition += Tile::MINI_HEIGHT;
                     }
                 }
             }
@@ -824,12 +825,12 @@ void Place::DrawFlyingTexts()
 {
     for(std::vector<FlyingText*>::iterator it = upFlyingTexts.begin(); it != upFlyingTexts.end(); ++it)
     {
-        (*it)->DrawOnOverworld();
+        (*it)->DrawOnWorldview();
     }
 
     for(std::vector<FlyingText*>::iterator it = downFlyingTexts.begin(); it != downFlyingTexts.end(); ++it)
     {
-        (*it)->DrawOnOverworld();
+        (*it)->DrawOnWorldview();
     }
 }
 

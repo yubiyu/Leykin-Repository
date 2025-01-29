@@ -32,7 +32,7 @@ public:
     const float scrollDownYDisplacement = Tile::HEIGHT*(-2.5);
 
     bool scrollUp;
-    float overworldXPosition, overworldYPosition;
+    float worldviewXPosition, worldviewYPosition;
 
     const int distanceFlownLimit = Tile::HEIGHT*1;
     int distanceFlown;
@@ -41,6 +41,6 @@ public:
     ~FlyingText();
 
     void Progress();
-    void DrawOnOverworld();
+    void DrawOnWorldview();
 
 };

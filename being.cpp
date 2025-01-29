@@ -111,15 +111,15 @@ void Being::Progress()
 
 void Being::DrawActivity(float x, float y)
 {
-    //if(x > Camera::OVERWORLD_MIN_DRAW_X && x < Camera::OVERWORLD_MAX_DRAW_X
-    //        && y > Camera::OVERWORLD_MIN_DRAW_Y && y < Camera::OVERWORLD_MAX_DRAW_Y)
+    //if(x > Camera::WORLDVIEW_MIN_DRAW_X && x < Camera::WORLDVIEW_MAX_DRAW_X
+    //        && y > Camera::WORLDVIEW_MIN_DRAW_Y && y < Camera::WORLDVIEW_MAX_DRAW_Y)
     //{
         int f = 0;
         if(!facingLeft)
             f = ALLEGRO_FLIP_HORIZONTAL;
 
         if(activity == BeingIndex::ACT_WALKING)
-            al_draw_bitmap_region(Image::beingPng[ancestry],
+            al_draw_bitmap_region(Image::beingsSub[ancestry],
                                   spriteVariant*Image::beingNumWalkFrames*spriteWidth + spriteWidth*currentFrame,
                                   spriteHeight*activity,
                                   spriteWidth,

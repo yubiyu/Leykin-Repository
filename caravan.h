@@ -27,6 +27,7 @@ class Caravan
 {
 public:
     static std::vector<Caravan*>caravans;
+    static Caravan*pcCaravan;
 
 /// State
     bool active;
@@ -48,7 +49,7 @@ public:
     bool atPlace;
     Place *whichPlace;
     bool atHome;
-    bool onRoad; // As opposed to at a city or other landmark, for overworld drawing purposes.
+    bool onRoad; // As opposed to at a city or other landmark, for worldview drawing purposes.
     Road *whichRoad;
     bool reverseRoad;
     bool atRoadsEnd;
@@ -60,8 +61,8 @@ public:
     float timeToNextWaypoint; // How much travel time remains to reach next waypoint.
     float distanceFromRoadsEnd;
     float roadSegmentLength;
-    float overworldXPosition, overworldYPosition;
-    float overworldXDestination, overworldYDestination;
+    float worldviewXPosition, worldviewYPosition;
+    float worldviewXDestination, worldviewYDestination;
 
     float travelSpeed;
 
@@ -110,7 +111,7 @@ public:
 /// Mission, trade and movement functions
     int SelectRandomTradeDestination();
 
-    void OverworldLogic();
+    void WorldviewLogic();
 
 /// Location functions
     void UpdateTravelSpeed();
@@ -118,7 +119,7 @@ public:
     void MoveToRoad(Road *r, bool isReverseRoad);
     void MoveToRoadSegment(int a, bool isReverseRoad); // Must first have index of waypoints set in MoveToRoad();
 
-    void UpdateOverworldPosition();
+    void UpdateWorldviewPosition();
 
 /// Inventory functions
     void UpdateCargoWeight();
@@ -139,11 +140,15 @@ public:
     void AllBubblesNeedUpdate();
 
 /// Drawing functions
-    void DrawSpriteOnOverworld();
+    void DrawSpriteOnWorldview();
     void DrawActivity(float x, float y);
     void DrawCaravanCrewBubble();
     //void DrawCaravanTravelViewBubble();
     void DrawCaravanInventoryBubble();
     void DrawCaravanTradeRecordsBubble();
     void DrawCaravanPathfindingBubble();
+
+/// Search functions
+    /// Search
+    bool CheckContainsBeing(Being *b);
 };

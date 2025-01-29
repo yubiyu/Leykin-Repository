@@ -1,7 +1,9 @@
-#ifndef ANCESTRYINDEX_H_INCLUDED
-#define ANCESTRYINDEX_H_INCLUDED
+#pragma once
 
 #include <map>
+#include <array>
+
+#include "configuration.h"
 
 #include "attributeindex.h"
 #include "featindex.h"
@@ -26,6 +28,9 @@ struct AncestryIndex
     static const int ANCESTRY_MARKER_LAST = ANCESTRY_HAPHAE;
     static const int NUM_ANCESTRIES = ANCESTRY_MARKER_LAST+1;
 
+    static std::map<int, std::string>ancestryNames;
+
+    /*
     inline static const std::map<unsigned,std::string>ancestryNames
     {
         {ANCESTRY_GENERAL, "Leykin"},
@@ -38,6 +43,7 @@ struct AncestryIndex
         {ANCESTRY_ORDON, "Ordon"},
         {ANCESTRY_HAPHAE, "Haphae"}
     };
+    */
 
     inline static const std::map<int, std::array<int,AttributeIndex::NUM_ATTRIBUTES>>ancestryAttributes
     {                     //b, m, s
@@ -103,6 +109,13 @@ struct AncestryIndex
                            {SkillIndex::SKILL_NEGOTIATION, 1}}}
 
     };
-};
 
-#endif // ANCESTRYINDEX_H_INCLUDED
+    static void ApplyStringConfigurations()
+    {
+        for(unsigned i = ANCESTRY_MARKER_FIRST; i <= ANCESTRY_MARKER_LAST; i++)
+        {
+            std::string section = "ancestry " + std::to_string(i);
+            ancestryNames[i] = Configuration::ReturnString(Configuration::ancestryCfg, section.c_str(), "name");
+        }
+    }
+};

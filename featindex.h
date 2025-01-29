@@ -2,6 +2,7 @@
 #define FEATINDEX_H_INCLUDED
 
 #include <map>
+#include <string>
 
 struct FeatIndex
 {
@@ -65,7 +66,7 @@ struct FeatIndex
 
         ROLE_FEAT_WARRIOR_RESOLUTE,
 
-        ROLE_FEAT_HUNTER_PREPARATION,
+        ROLE_FEAT_BEASTKIN_PREPARATION,
 
         ROLE_FEAT_APOSTLE_GREATER_PURPOSE,
 
@@ -86,7 +87,7 @@ struct FeatIndex
         {ROLE_FEAT_EXILE_WASTEWALKER, "Wastewalker"},
         {ROLE_FEAT_BANDIT_INTIMIDATION, "Intimidation"},
         {ROLE_FEAT_WARRIOR_RESOLUTE, "Resolute"},
-        {ROLE_FEAT_HUNTER_PREPARATION, "Preparation"},
+        {ROLE_FEAT_BEASTKIN_PREPARATION, "Preparation"},
         {ROLE_FEAT_APOSTLE_GREATER_PURPOSE, "Greater Purpose"},
         {ROLE_FEAT_MERCHANT_APPRAISAL, "Appraisal"},
         {ROLE_FEAT_HEALER_PREVENTATIVE_MEASURES, "Preventative Measures"},

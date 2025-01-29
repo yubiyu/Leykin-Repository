@@ -7,7 +7,7 @@
 #include <allegro5/allegro5.h>
 
 #include "tile.h"
-#include "arena.h"
+#include "frameindex.h"
 
 /// Note: The camera should try to follow tiles, not follow actors
 
@@ -25,7 +25,7 @@ struct Camera
     static float zoomTranslateX;
     static float zoomTranslateY;
 
-    static bool overworldCameraMousePanningDisabled;
+    static bool worldviewCameraMousePanningDisabled;
     static float mouseTransformedX;
     static float mouseTransformedY;
 

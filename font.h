@@ -4,7 +4,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
-#define FONTDEF_OVERWORLD_PLACENAME              Font::builtin8
+#define FONTDEF_WORLDVIEW_PLACENAME              Font::builtin8
 
 #define FONTDEF_BUBBLEVIEW_HEADER                Font::builtin8
 #define FONTDEF_BUBBLEVIEW_LABEL                 Font::builtin8
@@ -14,6 +14,11 @@
 #define FONTDEF_CHARACTER_CREATION_LABEL         Font::monogram32
 #define FONTDEF_CHARACTER_CREATION_VALUE         Font::monogram32
 #define FONTDEF_CHARACTER_CREATION_DESCRIPTION   Font::monogram24
+
+#define FONTDEF_PARTYVIEW_HEADER                 Font::monogram32
+#define FONTDEF_PARTYVIEW_LABEL                  Font::monogram32
+#define FONTDEF_PARTYVIEW_VALUE                  Font::monogram32
+#define FONTDEF_PARTYVIEW_DESCRIPTION            Font::monogram32
 
 struct Font
 {

@@ -6,11 +6,12 @@
 
 #include "tile.h"
 #include "ancestryindex.h"
+#include "inventoryindex.h"
 
 struct Image
 {
     //static ALLEGRO_BITMAP *genericTitlePng;
-    //static ALLEGRO_BITMAP *genericOverworldPng;
+    //static ALLEGRO_BITMAP *genericWorldviewPng;
     //static ALLEGRO_BITMAP *genericResultsPng;
     //static ALLEGRO_BITMAP *genericBeingPng;
     //static ALLEGRO_BITMAP *genericTilePng;
@@ -19,7 +20,7 @@ struct Image
     static ALLEGRO_BITMAP *settingsVolumeBarPng;
     static ALLEGRO_BITMAP *settingsVolumeBarEmptyPng;
 
-    static ALLEGRO_BITMAP *overworldPlacePng;
+    static ALLEGRO_BITMAP *worldviewPlacePng;
 
     static const unsigned beingNumWalkFrames = 2;
     static const inline std::map<unsigned,unsigned>beingNumSpriteVariants =
@@ -35,12 +36,14 @@ struct Image
     };
 
     static ALLEGRO_BITMAP *beingsPng;
-    static ALLEGRO_BITMAP *beingPng[AncestryIndex::NUM_ANCESTRIES];
+    static ALLEGRO_BITMAP *beingsSub[AncestryIndex::NUM_ANCESTRIES];
 
     static ALLEGRO_BITMAP *expertiseIconPng;
 
     static ALLEGRO_BITMAP *miniCargoPng;
     static ALLEGRO_BITMAP *cargoPng;
+    static ALLEGRO_BITMAP *cargoSub[InventoryIndex::NUM_ITEMS];
+
 
     static ALLEGRO_BITMAP *redArrowPng;
     static ALLEGRO_BITMAP *redTransparentXPng;

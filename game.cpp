@@ -82,22 +82,28 @@ bool Game::Initialize(char **argv)
     Audio::Initialize();
 
     Filesystem::SetStandardFileInterface();
-    Configuration::LoadConfigurations();
-    InventoryIndex::LoadConfigurations();
-    PlaceIndex::LoadConfigurations();
-    Encyclopedia::LoadConfigurations();
-    Configuration::UnloadConfigurations();
+    Configuration::LoadStringConfigurations();
+    AncestryIndex::ApplyStringConfigurations();
+    RoleIndex::ApplyStringConfigurations();
+    InventoryIndex::ApplyStringConfigurations();
+    PlaceIndex::ApplyStringConfigurations();
+    Encyclopedia::ApplyStringConfigurations();
+    Configuration::UnloadStringConfigurations();
 
     Palette::InitializeOrthos();
     Palette::InitializeGB();
     Palette::InitializeBreath();
+
+    GameMode::Initialize(GameMode::GAME_MODE_SIMULATION);
     Scene::Initialize();
     Camera::Initialize();
 
     // *Might* not want to initialize everything, later.
     Title::Initialize();
     CharacterCreation::Initialize();
-    Overworld::Initialize();
+    Worldview::Initialize();
+    PartyView::Initialize();
+    CargoView::Initialize();
     Settings::Initialize();
     Archive::Initialize();
 
@@ -107,7 +113,9 @@ bool Game::Initialize(char **argv)
 void Game::Uninitialize()
 {
     //CharacterCreation::Uninitialize();
-    Overworld::Uninitialize();
+    Worldview::Uninitialize();
+    PartyView::Uninitialize();
+    CargoView::Uninitialize();
 
     Camera::Uninitialize();
 
@@ -137,9 +145,18 @@ void Game::InputSwitchboard()
     case Scene::INPUT_CONTEXT_TITLE:
         Title::Input();
         break;
-    case Scene::INPUT_CONTEXT_OVERWORLD:
-        Overworld::Input();
+
+    case Scene::INPUT_CONTEXT_WORLDVIEW:
+        Worldview::Input();
         break;
+    case Scene::INPUT_CONTEXT_PARTYVIEW:
+        PartyView::Input();
+        break;
+
+    case Scene::INPUT_CONTEXT_CARGOVIEW:
+        CargoView::Input();
+        break;
+
     case Scene::INPUT_CONTEXT_ARCHIVE:
         Archive::Input();
         break;
@@ -161,9 +178,18 @@ void Game::LogicSwitchboard()
         if(Title::exitOptionSelected)
             exit = true;
         break;
-    case Scene::SCENE_OVERWORLD:
-        Overworld::Logic();
+
+    case Scene::SCENE_WORLDVIEW:
+        Worldview::Logic();
         break;
+    case Scene::SCENE_PARTYVIEW:
+        PartyView::Logic();
+        break;
+
+    case Scene::SCENE_CARGOVIEW:
+        CargoView::Logic();
+        break;
+
     case Scene::SCENE_SETTINGS:
         Settings::Logic();
         break;
@@ -186,9 +212,17 @@ void Game::DrawingSwitchboard()
     case Scene::SCENE_TITLE:
         Title::Drawing();
         break;
-    case Scene::SCENE_OVERWORLD:
-        Overworld::Drawing();
+
+    case Scene::SCENE_WORLDVIEW:
+        Worldview::Drawing();
         break;
+    case Scene::SCENE_PARTYVIEW:
+        PartyView::Drawing();
+        break;
+    case Scene::SCENE_CARGOVIEW:
+        CargoView::Drawing();
+        break;
+
     case Scene::SCENE_SETTINGS:
         Settings::Drawing();
         break;

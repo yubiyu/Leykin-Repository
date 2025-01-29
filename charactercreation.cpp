@@ -17,7 +17,6 @@ void CharacterCreation::Initialize()
     creationPhase = PHASE_SUMMARY;
     creationMode = 0;
 
-
     /*
     for(int i = 0; i < 25; i++)
     {
@@ -29,7 +28,8 @@ void CharacterCreation::Initialize()
 
 void CharacterCreation::Uninitialize()
 {
-    delete creation;
+    if(creation != nullptr)
+        delete creation;
 }
 
 void CharacterCreation::LogicSwitchboard()
@@ -130,7 +130,19 @@ void CharacterCreation::SummaryInput()
 
     else if(Keyboard::keyHoldTicks[Keyboard::KEY_ENTER] == 1)
     {
-        Scene::ChangeScene(Scene::SCENE_OVERWORLD);
+        PC::pc = creation;
+        Being::people.push_back(creation);
+        creation = nullptr;
+
+        Caravan::pcCaravan = new Caravan();
+        Caravan::pcCaravan->AddMember((Being*)PC::pc);
+        Caravan::caravans.push_back(Caravan::pcCaravan);
+
+        int hometown = Caravan::pcCaravan->caravanLeader->GetHometown();
+        Caravan::pcCaravan->SetHometown(hometown);
+        Caravan::pcCaravan->MoveToPlace(Place::places.at(hometown));
+
+        Scene::ChangeScene(Scene::SCENE_WORLDVIEW);
     }
 }
 
@@ -183,11 +195,14 @@ void CharacterCreation::SummaryDrawing()
     Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_VALUE, Palette::COLKEY_TEXT_VALUE, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_ANCESTRY_TEXT_Y, ALLEGRO_ALIGN_LEFT, AncestryIndex::ancestryNames.at(creation->GetAncestry()));
     Hax::string_al_draw_multiline_text(FONTDEF_CHARACTER_CREATION_DESCRIPTION, Palette::COLKEY_TEXT_DESCRIPTION, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_ANCESTRY_TEXT_Y + SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_Y_OFFSET,
                                        SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_WIDTH, Font::TEXT_HEIGHT_24, ALLEGRO_ALIGN_LEFT,
-                                       Encyclopedia::entries.at(Encyclopedia::CATEGORIES_LEYKIN).at(creation->GetAncestry()));
+                                       Encyclopedia::entries.at(Encyclopedia::CATEGORIES_ANCESTRIES).at(creation->GetAncestry()));
 
 
     al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL, SUMMARY_BIOGRAPHY_LABEL_TEXT_X, SUMMARY_ROLE_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Role");
     Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_VALUE, Palette::COLKEY_TEXT_VALUE, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_ROLE_TEXT_Y, ALLEGRO_ALIGN_LEFT, creation->GetRoleString());
+    Hax::string_al_draw_multiline_text(FONTDEF_CHARACTER_CREATION_DESCRIPTION, Palette::COLKEY_TEXT_DESCRIPTION, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_ROLE_TEXT_Y + SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_Y_OFFSET,
+                                       SUMMARY_BIOGRAPHY_DESCRIPTIONS_TEXT_WIDTH, Font::TEXT_HEIGHT_24, ALLEGRO_ALIGN_LEFT,
+                                       Encyclopedia::entries.at(Encyclopedia::CATEGORIES_ROLES).at(creation->GetRole()));
 
     al_draw_text(FONTDEF_CHARACTER_CREATION_LABEL, Palette::COLKEY_TEXT_LABEL, SUMMARY_BIOGRAPHY_LABEL_TEXT_X, SUMMARY_HOMETOWN_TEXT_Y, ALLEGRO_ALIGN_RIGHT, "Home");
     Hax::string_al_draw_text(FONTDEF_CHARACTER_CREATION_VALUE, Palette::COLKEY_TEXT_VALUE, SUMMARY_BIOGRAPHY_VALUE_TEXT_X, SUMMARY_HOMETOWN_TEXT_Y, ALLEGRO_ALIGN_LEFT, PlaceIndex::placeNames.at(creation->GetHometown()));

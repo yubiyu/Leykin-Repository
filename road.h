@@ -52,7 +52,7 @@ public:
     void SetSovereignty(int whichSovereignty);
 
     float ReturnSegmentLength(int a, int b);
-    void DrawSegmentsOnOverworld();
+    void DrawSegmentsOnWorldview();
 
 
 };

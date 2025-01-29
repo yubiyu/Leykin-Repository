@@ -18,8 +18,16 @@ void Scene::ChangeScene(int whichScene)
         ChangeInputContext(INPUT_CONTEXT_TITLE);
         break;
 
-    case SCENE_OVERWORLD:
-        ChangeInputContext(INPUT_CONTEXT_OVERWORLD);
+    case SCENE_WORLDVIEW:
+        ChangeInputContext(INPUT_CONTEXT_WORLDVIEW);
+        break;
+
+    case SCENE_PARTYVIEW:
+        ChangeInputContext(INPUT_CONTEXT_PARTYVIEW);
+        break;
+
+    case SCENE_CARGOVIEW:
+        ChangeInputContext(INPUT_CONTEXT_CARGOVIEW);
         break;
 
     case SCENE_ARCHIVE:

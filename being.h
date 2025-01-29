@@ -124,6 +124,7 @@ public:
 /// Drawing
     void DrawActivity(float x, float y);
     void ProgressAnimation();
+
 };
 
 #endif // BEING_H_INCLUDED

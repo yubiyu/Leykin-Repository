@@ -14,13 +14,13 @@ FlyingText::FlyingText(int ic, std::string t, float x, float y, bool up)
 
     if(scrollUp)
     {
-        overworldXPosition = x + scrollUpXDisplacement;
-        overworldYPosition = y + scrollUpYDisplacement;
+        worldviewXPosition = x + scrollUpXDisplacement;
+        worldviewYPosition = y + scrollUpYDisplacement;
     }
     else
     {
-        overworldXPosition = x + scrollDownXDisplacement;
-        overworldYPosition = y + scrollDownYDisplacement;
+        worldviewXPosition = x + scrollDownXDisplacement;
+        worldviewYPosition = y + scrollDownYDisplacement;
     }
 
     //std::cout << "Item #" << ic << " " << t << " " << x << "/" << y << std::endl;
@@ -42,19 +42,19 @@ void FlyingText::Progress()
             active = false;
         }
         if(scrollUp)
-            overworldYPosition -= scrollUpSpeed;
+            worldviewYPosition -= scrollUpSpeed;
         else
-            overworldYPosition += scrollDownSpeed;
+            worldviewYPosition += scrollDownSpeed;
     }
 
 }
 
-void FlyingText::DrawOnOverworld()
+void FlyingText::DrawOnWorldview()
 {
     if(!queued)
     {
-        float drawX = overworldXPosition - Camera::xPosition;
-        float drawY = overworldYPosition - Camera::yPosition;
+        float drawX = worldviewXPosition - Camera::xPosition;
+        float drawY = worldviewYPosition - Camera::yPosition;
 
         al_draw_bitmap_region(Image::miniCargoPng,
                               itemIcon*Tile::MINI_WIDTH, 0,

@@ -21,18 +21,23 @@ struct InventoryIndex
         IT_EFFIGY  = 16, IT_CONTRACT  = 17, IT_VESSEL = 18, IT_GRIMOIRE     = 19,
         IT_FUEL    = 20, IT_CLOCKWORK = 21, IT_TOOLS  = 22, IT_AUTOMATON    = 23
     };
-    static const unsigned IT_MARKER_FIRST = IT_CORPUS;
-    static const unsigned IT_MARKER_LAST = IT_AUTOMATON;
+    static const size_t IT_MARKER_FIRST = IT_CORPUS;
+    static const size_t IT_MARKER_LAST = IT_AUTOMATON;
+    static const size_t NUM_ITEMS = IT_MARKER_LAST + 1;
 
-    static std::map<int,std::string>itemNames;
+    static std::map<size_t, std::string>itemNames;
+    static std::map<size_t, int>itemValues;
+    static std::map<size_t, int>itemWeights;
 
-    static void LoadConfigurations()
+    static void ApplyStringConfigurations()
     {
         for(unsigned i = IT_MARKER_FIRST; i <= IT_MARKER_LAST; i++)
         {
             std::string section = "cargo " + std::to_string(i);
             //std::cout << section << ": " << std::endl;
             itemNames[i] = Configuration::ReturnString(Configuration::cargoCfg, section.c_str(), "name");
+            itemValues[i] = Configuration::ReturnInt(Configuration::cargoCfg, section.c_str(), "value");
+            itemValues[i] = Configuration::ReturnInt(Configuration::cargoCfg, section.c_str(), "weight");
             //std::cout << itemNames[i] << std::endl;
         }
     }

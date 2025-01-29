@@ -5,7 +5,8 @@
 #include <string>
 
 #include "ancestryindex.h"
-#include "sovereigntyindex.h"
+#include "roleindex.h"
+//#include "sovereigntyindex.h"
 #include "placeindex.h"
 #include "inventoryindex.h"
 
@@ -13,18 +14,20 @@ struct Encyclopedia
 {
     enum enumEncyclopediaCategories
     {
-        CATEGORIES_LEYKIN = 0,
-        CATEGORIES_FACTIONS = 1,
-        CATEGORIES_PLACES = 2,
-        CATEGORIES_CARGO = 3,
-        CATEGORIES_MISC = 4
+        CATEGORIES_ANCESTRIES = 0,
+        CATEGORIES_ROLES = 1,
+        CATEGORIES_FACTIONS = 2,
+        CATEGORIES_PLACES = 3,
+        CATEGORIES_CARGO = 4,
+        CATEGORIES_MISC = 5
     };
-    static const int CATEGORIES_MARKER_FIRST = CATEGORIES_LEYKIN;
+    static const int CATEGORIES_MARKER_FIRST = CATEGORIES_ANCESTRIES;
     static const int CATEGORIES_MARKER_LAST = CATEGORIES_MISC;
-    static const int NUM_CATEGORIES = 5;
+    static const int NUM_CATEGORIES = 6;
     inline static const std::map<int, std::string>categoryTitles =
     {
-        {CATEGORIES_LEYKIN, "Leykin"},
+        {CATEGORIES_ANCESTRIES, "Leykin"},
+        {CATEGORIES_ROLES, "Roles"},
         {CATEGORIES_FACTIONS, "Factions"},
         {CATEGORIES_PLACES, "Places"},
         {CATEGORIES_CARGO, "Cargo"},
@@ -35,21 +38,6 @@ struct Encyclopedia
 
     static std::map<int, std::map<int, std::string>>entries;
 
-    /*
-    static inline const std::map<int, std::string>leykinLore =
-    {
-        {AncestryIndex::ANCESTRY_GENERAL, "Leykin are beings that traverse the lines that thread the Sealed World's domains together. Their ancestors emerged from veins of sacred earth to inherit the ruins of cities too grand even for all their number. Yet, the day will come that the Leykin outgrow this Bottled World, returning to clay to be sculpted anew once more."},
-
-        {AncestryIndex::ANCESTRY_VERIT, "Individualists who prize their personal ideals before laws or traditions. Although the well-travelled quickly adapt to the customs of foreign lands, Verit have gained a reputation for self-righteous impropriety."},
-        {AncestryIndex::ANCESTRY_YETI, "Stout-hearted adherents to a creed of fraternity built on self-sacrifice. Every year, Yeti congregate in the holy city of Verse to reaffirm its tenents."},
-        {AncestryIndex::ANCESTRY_MAKHI, "Descendents and worshippers of the technological civilization Makhia. Makhii enjoy sleeping in the sun while hirelings toil, and spare no cunning in attracting capable candidates to their service."},
-        {AncestryIndex::ANCESTRY_BEYU, "The Beyu work hard and play hard, recognizing the importance of leisure in a necessarily regimented lifestyle. Their streamlined bodies propel them gracefully through and against the currents of the Thousand Isles."},
-        {AncestryIndex::ANCESTRY_MESERA, "A long-lived people who emerge from Hathsera in great numbers every twelve years to spread its seeds. All the world's forests are in fact Hathsera's descendents."},
-        {AncestryIndex::ANCESTRY_ORDON, "The few Ordon who venture out of ashen V'ordozaal carry with them tools of surpassing quality, lending much to their reputation as artificers."},
-        {AncestryIndex::ANCESTRY_HAPHAE, "Inquisitive but ever-forgetful, the adventurous Hapahae descend from their unchanging mountain villages in pursuit of experiences worth remembering."}
-    };
-    */
-
     static inline const std::map<int, std::string>encyclopediaFactionLore =
     {
         {SOV_NULL, "This area is not recognized as soverign territory."},
@@ -59,20 +47,30 @@ struct Encyclopedia
         {SOV_THOUSAND_ISLES,"The Convocation of The Thousand Isles was originally an economic alliance between the Beyu island states of Reach, Karune and Yulmer, before the advent of tethercraft made "}
     };
 
-    static void LoadConfigurations()
+    static void ApplyStringConfigurations()
     {
         entries =
         {
-            //{CATEGORIES_LEYKIN, leykinLore},
+            //{CATEGORIES_ANCESTRIES, encyclopediaAncestryLore},
+            //{CATEGORIES_ANCESTRIES, leykinLore},
             {CATEGORIES_FACTIONS, encyclopediaFactionLore}
         };
+
 
         for(size_t i = AncestryIndex::ANCESTRY_MARKER_FIRST; i <= AncestryIndex::ANCESTRY_MARKER_LAST; i++)
         {
             std::string section = "ancestry " + std::to_string(i);
-            entryTitles[CATEGORIES_LEYKIN][i] = AncestryIndex::ancestryNames.at(i);
-            entries[CATEGORIES_LEYKIN][i] = Configuration::ReturnString(Configuration::ancestryCfg, section.c_str(), "lore");
+            entryTitles[CATEGORIES_ANCESTRIES][i] = AncestryIndex::ancestryNames.at(i);
+            entries[CATEGORIES_ANCESTRIES][i] = Configuration::ReturnString(Configuration::ancestryCfg, section.c_str(), "lore");
         }
+
+        for(size_t i = RoleIndex::ROLE_MARKER_FIRST; i <= RoleIndex::ROLE_MARKER_LAST; i++)
+        {
+            std::string section = "role " + std::to_string(i);
+            entryTitles[CATEGORIES_ROLES][i] = RoleIndex::roleNames.at(i);
+            entries[CATEGORIES_ROLES][i] = Configuration::ReturnString(Configuration::roleCfg, section.c_str(), "lore");
+        }
+
 
         for(size_t i = InventoryIndex::IT_MARKER_FIRST; i <= InventoryIndex::IT_MARKER_LAST; i++)
         {

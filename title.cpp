@@ -59,7 +59,7 @@ void Title::Input()
             Scene::ChangeScene(Scene::SCENE_CHARACTER_CREATION);
             break;
         case Title::OPTION_LOAD_GAME:
-            Scene::ChangeScene(Scene::SCENE_OVERWORLD);
+            Scene::ChangeScene(Scene::SCENE_WORLDVIEW);
             break;
         case Title::OPTION_ARCHIVE:
             Scene::ChangeScene(Scene::SCENE_ARCHIVE);

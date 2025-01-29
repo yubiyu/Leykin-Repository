@@ -38,7 +38,7 @@ struct PlaceIndex
 
     static std::map<int,std::string>placeNames;
 
-    static const inline std::map<int, std::array<float,2>>placeOverworldXYCells =
+    static const inline std::map<int, std::array<float,2>>placeWorldviewXYCells =
     {
         {PL_ERICENNES,    { 70,  70 } },
         {PL_CHORAS,       { 74,  62 } },
@@ -88,7 +88,7 @@ struct PlaceIndex
 
 
     /*
-    const std::map<int, std::array<float,2>>placeOverworldXYCells =
+    const std::map<int, std::array<float,2>>placeWorldviewXYCells =
     {
         {PL_ERICENNES,    { 700,  700 } },
         {PL_CHORAS,       { 740,  620 } },
@@ -247,6 +247,8 @@ struct PlaceIndex
 
     };
 
+
+
     static const inline std::map<int,int>placeSovereignties =
     {
         {PL_ERICENNES, SOV_VERUS}, {PL_CHORAS,SOV_VERUS}, {PL_KETH_KETHER, SOV_VERUS},
@@ -267,8 +269,7 @@ struct PlaceIndex
     };
 
 
-
-    static void LoadConfigurations()
+    static void ApplyStringConfigurations()
     {
         for(unsigned i = PL_MARKER_FIRST; i <= PL_MARKER_LAST; i++)
         {

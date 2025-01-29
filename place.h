@@ -33,15 +33,15 @@ class Road;
 class Place
 {
 public:
-    static const int OVERWORLD_SPRITE_W = 64;
-    static const int OVERWORLD_SPRITE_H = 64;
+    static const int WORLDVIEW_SPRITE_W = 64;
+    static const int WORLDVIEW_SPRITE_H = 64;
 
     static std::map <int, Place*>places;
 
 /// Identity
     int placeIdentity;
 
-    std::string name; // Just the simple name for identification on the overworld map.
+    std::string name; // Just the simple name for identification on the worldview map.
     //std::string epithet; // e.g. ", City of Dreaming Spires"
 
     int sovereignty;
@@ -101,7 +101,7 @@ public:
     std::array<float,InventoryIndex::IT_MARKER_LAST+1>industrialConsumptionQuantityDaily; // How much of a resource is consumed by industries on average **per day**.
 
 /// Location
-    int overworldXPosition, overworldYPosition; // Absolute position on the overworld.
+    int worldviewXPosition, worldviewYPosition; // Absolute position on the worldview.
 
     std::vector<Road*>connections;
 
@@ -243,8 +243,8 @@ public:
     void QueueDownFlyingText(int icon, std::string text, float x, float y);
     void ProgressFlyingTexts();
 
-/// Overworld drawing functions
-    void DrawSpriteOnOverworld();
+/// Worldview drawing functions
+    void DrawSpriteOnWorldview();
 
     /*
     void DrawPlacePopulationBubble();
